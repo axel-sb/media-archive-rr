@@ -4,32 +4,8 @@ A web application for searching and displaying personal media data stored in a S
 
 ## Project Structure
 
-- **App Location**: `/Users/a/_current/media-archive`
-- **Data Sources**:
-  - Original SQLite database: `/Users/a/Library/Application Support/io.datasette.llm/logs.db`
-  - Google Takeout metadata: `/Users/a/Library/Application Support/io.datasette.llm/takeout-media-data`
+(requires update)
 
-## Setup Instructions
-
-1. Install dependencies:
-   ```
-   npm install
-   ```
-
-2. Run database migrations:
-   ```
-   npx prisma migrate dev
-   ```
-
-3. Import data from source database and JSON files:
-   ```
-   node scripts/import-data.js
-   ```
-
-4. Start the development server:
-   ```
-   npm run dev
-   ```
 
 ## Technology Stack
 
@@ -46,11 +22,7 @@ A web application for searching and displaying personal media data stored in a S
 
 ## Data Import Process
 
-The application imports data from:
-1. The original `logs.db` SQLite database (for file paths and descriptions)
-2. Google Takeout JSON files (for metadata like dates, locations, etc.)
-
-This data is consolidated into a single SQLite database using Prisma ORM.
+(requires updated process description)
 
 # Welcome to Remix!
 

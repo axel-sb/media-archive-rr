@@ -1,0 +1,35 @@
+.btn-toggle {
+    position: absolute;
+    right: 3rem;
+    top: 1.75rem;
+}
+
+footer {
+    background: #000;
+
+    p {
+        font-family: "Sixtyfour Convergence", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 400;
+        font-style: normal;
+        font-variation-settings:
+            "BLED" 0,
+            "SCAN" 0,
+            "XELA" 50,
+            "YELA" 10;
+    }
+
+    &:hover {
+        transition-property: opacity, transform;
+        font-family: 'Sixtyfour Convergence';
+        font-weight: 400;
+        font-style: normal;
+        font-stretch: normal;
+        font-variation-settings: "BLED" 0, "SCAN" 0, "XELA" 100, "YELA" 100;
+        font-optical-sizing: none;
+        opacity: 1;
+        line-height: initial;
+        transition-duration: 350ms;
+        border-left-color: #0c5;
+    }
+}

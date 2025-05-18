@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+/*
+generator archive_client {
+  provider = "prisma-client-js"
+}
+
+datasource archive_db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Media file model
+model MediaFile {
+  id          String   @id @default(cuid())
+  sourceId    String   @unique
+  filename    String
+  filePath    String
+  fileType    String
+  description String?
+  createdAt   DateTime
+  takenAt     DateTime?
+  latitude    Float?
+  longitude   Float?
+  altitude    Float?
+  views       Int      @default(0)
+  googleUrl   String?
+  deviceType  String?
+
+  tags        TagsOnMediaFiles[]
+
+  @@map("media_files")
+}
+
+// Tags for categorizing media
+model Tag {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  mediaFiles  TagsOnMediaFiles[]
+
+  @@map("tags")
+}
+
+// Many-to-many relationship between media files and tags
+model TagsOnMediaFiles {
+  mediaFile   MediaFile @relation(fields: [mediaFileId], references: [id])
+  mediaFileId String
+  tag         Tag       @relation(fields: [tagId], references: [id])
+  tagId       String
+
+  @@id([mediaFileId, tagId])
+  @@map("tags_on_media_files")
+}
+*/

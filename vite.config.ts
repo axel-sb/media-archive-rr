@@ -1,4 +1,6 @@
 import { vitePlugin as remix } from "@remix-run/dev";
+import tailwindcss from '@tailwindcss/vite';
+import { remixDevTools } from "remix-development-tools";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
@@ -9,7 +11,8 @@ declare module "@remix-run/node" {
 }
 
 export default defineConfig({
-  plugins: [
+    plugins: [remixDevTools(),
+      tailwindcss(),
     remix({
       future: {
         v3_fetcherPersist: true,
