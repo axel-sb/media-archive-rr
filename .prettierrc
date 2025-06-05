@@ -5,6 +5,7 @@
 	"embeddedLanguageFormatting": "auto",
 	"endOfLine": "lf",
 	"htmlWhitespaceSensitivity": "css",
+    "indent_Style": "2",
 	"insertPragma": false,
 	"jsxSingleQuote": false,
 	"printWidth": 80,
@@ -32,7 +33,6 @@
 			}
 		}
 	],
-	"plugins": ["prettier-plugin-tailwindcss"],
 	"tailwindAttributes": ["class", "className", "ngClass", ".*[cC]lassName"],
 	"tailwindFunctions": ["clsx", "cn"]
 }

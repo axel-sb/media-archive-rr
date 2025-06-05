@@ -1,104 +1,135 @@
 import {
     Links,
     Meta,
+    NavLink,
     Outlet,
     Scripts,
     ScrollRestoration,
     useNavigation,
-} from "@remix-run/react";
-import { ReactNode } from "react";
+} from 'react-router'
 
+import './app.css'
 
-import { LinksFunction } from "@remix-run/node";
-import "./tailwind.css";
+import { LinksFunction } from 'react-router'
 
 export const links: LinksFunction = () => [
-    { rel: "preconnect", href: "https://fonts.googleapis.com" },
-    {
-        rel: "preconnect",
-        href: "https://fonts.gstatic.com",
-        crossOrigin: "anonymous",
-    },
-    {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Sixtyfour+Convergence:BLED,SCAN,XELA,YELA@0..100,-53..100,-100..100,-100..100&family=Workbench:BLED,SCAN@0..100,-53..100&display=swap",
-    },
-];
+	{ rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+	{
+		rel: 'preconnect',
+		href: 'https://fonts.gstatic.com',
+		crossOrigin: 'anonymous',
+	},
+	{
+		rel: 'stylesheet',
+		href: 'https://fonts.googleapis.com/css2?family=Sixtyfour+Convergence:BLED,SCAN,XELA,YELA@0..100,-53..100,-100..100,-100..100&family=Workbench:BLED,SCAN@0..100,-53..100&display=swap',
+	},
+]
 
-export function Layout({ children }: { children: ReactNode }) {
-    return (
-        <html lang="en">
-            <head>
-                <meta charSet="utf-8" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <Meta />
-                <Links />
-            </head>
-            <body className="min-h-screen bg-[url(images/header.jpeg)] bg-[600px_auto] bg-repeat backdrop-filter backdrop-blur-[8px] backdrop-brightness-[0.5] backdrop-contrast-[0.5] text-[#e3e3e3]">
-                {children}
-                <ScrollRestoration />
-                <Scripts />
-            </body>
-        </html>
-    );
+export function Layout({ children }: { children: React.ReactNode }) {
+	return (
+		<html lang="en">
+			<head>
+				<meta charSet="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<Meta />
+				<Links />
+			</head>
+			<body>
+				{children}
+				<ScrollRestoration />
+				<Scripts />
+			</body>
+		</html>
+	)
 }
 
 export default function App() {
-const navigation = useNavigation()
-    return (
-        <div className="flex flex-col min-h-screen">
-            {/*   //__ MARK:Header
-              */}
-            <header className="h-24 bg-neutral-900 bg-[url(images/header.jpeg)] bg-[600px_auto] bg-repeat-x text-4xl bg-blend-hard-light py-4 font-bold" style={{ boxShadow: '0 0 .5rem #000b, 0 0 1rem #0006, 0 0 1.5rem #0004', }}>
+	const navigation = useNavigation()
+	return (
+		<div className="flex min-h-screen flex-col bg-gray-700 text-yellow-100 ">
+			{/*//// MARK:HEADER 🟡
+			 */}
+			<header
+				className="grid h-16 w-full px-4 sm:md-6 md:px-8 grid-cols-[1fr_4rem_4rem] gap-4 md:gap-8 place-items-center"
+				style={{
+					boxShadow: '0 0 .5rem #000b, 0 0 1rem #0006, 0 0 1.5rem #0004',
+				}}
+			>
+				<div className="navlink-home inline-flex h-11 w-auto cursor-pointer items-center justify-self-start rounded-md">
+					<NavLink
+						className={`$({ isActive, isPending }) => isActive ? 'active' : 'pending' z-10 inline-flex h-10 w-auto`}
+						to={`home`}
+					>
+						<img
+							src="images/bilderbuch.svg"
+							alt='The homepage title is "Bilderbuch"'
+							className="justify-self-start object-contain"
+						/>
+					</NavLink>
+				</div>
 
-                <div className="flex w-full max-w-4xl h-full px-4 mx-auto justify-between items-center">
+				<div className="navlink-gallery inline-flex h-10 w-14 cursor-pointer justify-end self-center justify-self-end rounded-md">
+					<NavLink
+						className={`$({ isActive, isPending }) => isActive ? 'active' : 'pending' z-10 inline-flex h-10 w-10 justify-center text-foreground`}
+						to={`gallery`}
+					>
+						<img
+							src="gallery.svg"
+							alt='The homepage title is "Bilderbuch"'
+							className="flex-grow max-h-full md:max-h-14 will-change-auto object-contain"
+						/>
+					</NavLink>
+				</div>
 
-                    <h2 className="home w-18 h-14 pl-3 pr-1 inline-flex justify-center items-center rounded-full" style={{ backgroundImage: 'radial-gradient(ellipse farthest-side at center, hsla(0, 0%, 0%, 0.62) 50%, hsla(0, 0%, 0%, 0) 100%)',}}>
-                        <a href="/" className="hover:underline">
-                            <img className="w-10 h-10 sm:w-14 sm:h-12  p-0" src="cameraS.svg" style={{
-                                filter: 'drop-shadow(1px 1px 1px #fff) drop-shadow(-1px -1px 1px #fff) drop-shadow(0 0 5px #1a1918bb)  drop-shadow(0 0 10px #1a1918)  drop-shadow(0 0 20px #1a1918)',
-                            }} />
-                        </a>
-                    </h2>
+				<div className="navlink-map inline-flex h-10 w-14 cursor-pointer justify-center self-center justify-self-center rounded-md">
+					<NavLink
+						className={`$({ isActive, isPending }) => isActive ? 'active' : 'pending' z-10 inline-flex h-10 w-10 justify-center text-foreground`}
+						to={`map`}
+					>
+						<img
+							src="map.svg"
+							alt='The homepage title is "Bilderbuch"'
+							className="flex-grow sm:max-h-10 md:max-h-14 will-change-auto object-contain"
+						/>
+					</NavLink>
+				</div>
+			</header>
 
-                    <nav className="inline-flex items-baseline justify-around">
+			<main className="flex flex-col flex-grow w-screen min-h-0">
+				{navigation.state === 'loading' ? (
+					<div className="flex h-64 items-center justify-center">
+						<div className="h-12 w-12 animate-spin rounded-full border-t-2 border-b-2 border-blue-500"></div>
+					</div>
+				) : (
+					<Outlet />
+				)}
+			</main>
 
-                        <ul className="flex gap-x-10 sm:gap-x-15 backdrop-blur-[1px] rounded-md px-3 py-2">
-                            <li>
-                                <a href="/gallery" className="hover:underline px-2">
-                                    <img className="w-10 h-10 sm:w-12 sm:h-12 p-0" src="gallery.svg" style={{
-                                        filter: 'drop-shadow(1px 1px 1px #fff) drop-shadow(-1px -1px 1px #fff)',
-                                    }} />
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/gallery" className="hover:underline px-2">
-                                    <img className="w-10 h-10 sm:w-12 sm:h-12  p-0 pt-1 pb-0.5" src="map.svg" style={{
-                                        filter: 'drop-shadow(1px 1px 1px #fff) drop-shadow(-1px -1px 1px #fff)',
-                                    }} />
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+			{/*//// MARK:FOOTER 🟡
+			 */}
 
-                </div>
-            </header>
-
-            <main className="flex-grow max-w-7xl mx-auto px-2 mt-6 md:mt-8x">
-                {navigation.state === "loading" ? (
-                    <div className="flex justify-center items-center h-64">
-                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-                    </div>
-                ) : (
-                    <Outlet />
-                )}
-            </main>
-
-            <footer className="text-2xl mt-4 py-2">
-                <div className="w-full mx-auto  px-4 text-center">
-                    <p>k62</p>
-                </div>
-            </footer>
-        </div>
-    );
+			<footer className="flex items-base justify-center w-full px-4 bg-transparent">
+				<NavLink
+					className={`$({ isActive, isPending }) => isActive ? 'active' : 'pending' z-10 inline-flex h-10 w-auto justify-center text-foreground`}
+					to={`home`}
+				>
+					<p
+						style={{
+							fontFamily: '"Sixtyfour Convergence", sans-serif',
+							fontOpticalSizing: 'auto',
+							fontWeight: '400',
+							fontStyle: 'normal',
+							fontVariationSettings:
+								'"BLED" 0, "SCAN" 0, "XELA" -23, "YELA" 20',
+							lineHeight: '.2',
+							filter: 'grayscale(1)',
+						}}
+						className="text-3xl text-shadow-lg/50 mb-6"
+					>
+						k62
+					</p>
+				</NavLink>
+			</footer>
+		</div>
+	)
 }

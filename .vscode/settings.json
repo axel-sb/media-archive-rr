@@ -1,18 +1,18 @@
 {
-    "workbench.colorCustomizations": {
-        "commandCenter.border": "#15202b99",
-        "sash.hoverBorder": "#fbc503",
-        "tab.activeBorder": "#fbc503",
-        "titleBar.activeBackground": "#fbc503",
-        "titleBar.activeForeground": "#15202b",
-        "titleBar.inactiveBackground": "#fbc50399",
-        "titleBar.inactiveForeground": "#15202b99"
+	"workbench.colorCustomizations": {
+        "commandCenter.border": "#e7e7e799",
+        "sash.hoverBorder": "#fb0503",
+        "titleBar.activeBackground": "#fb0503",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveBackground": "#fb050399",
+        "titleBar.inactiveForeground": "#e7e7e799",
+        "tab.activeBorder": "#fb0503"
     },
-    "peacock.color": "#fbc503",
-    "svg.preview.background": "transparent",
-    "mdx-preview.preview.useVscodeMarkdownStyles": false,
-    "editor.fontFamily": "'Operator Mono Lig Light', 'Operator Mono Lig', 'Operator Mono Ssm Light', 'Operator Mono Lig', 'Operator Mono Ssm Lig', 'Operator Mono', 'M PLUS 1 Code', 'SF Mono', 'Inconsolata XL', 'Input Mono Condensed', Menlo, Monaco, 'Courier New', monospace",
-    "editor.lineHeight": 23,
-    "editor.fontWeight": 300,
-    "editor.fontLigatures": "'calt', 'liga', 'dlig', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08'"
+	"peacock.color": "#fb0503",
+	"svg.preview.background": "transparent",
+	"mdx-preview.preview.useVscodeMarkdownStyles": false,
+	"editor.fontFamily": "PragmataPro Mono",
+	"editor.lineHeight": 23,
+	"editor.fontWeight": 500,
+	"editor.maxTokenizationLineLength": 50000
 }

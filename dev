@@ -1,0 +1,41 @@
+> react-router dev
+
+Error: Route config in "routes.ts" is invalid.
+
+Error: Unable to define routes with duplicate route id: "routes/_i
+Error: Unable to define routes with duplicate route id: "routes/_index"
+    at walk (/Users/a/_current/media-archive-rr/node_modules/@reac
+    at walk (/Users/a/_current/media-archive-rr/node_modules/@react-router/dev/dist/vite.js:265:13)
+    at configRoutesToRouteManifest (/Users/a/_current/media-archiv
+    at configRoutesToRouteManifest (/Users/a/_current/media-archive-rr/node_modules/@react-router/dev/dist/vite.js:277:5)
+    at resolveConfig (/Users/a/_current/media-archive-rr/node_modu
+    at resolveConfig (/Users/a/_current/media-archive-rr/node_modules/@react-router/dev/dist/vite.js:507:12)
+    at createConfigLoader (/Users/a/_current/media-archive-rr/node
+    at createConfigLoader (/Users/a/_current/media-archive-rr/node_modules/@react-router/dev/dist/vite.js:573:29)
+    at config (/Users/a/_current/media-archive-rr/node_modules/@re
+    at config (/Users/a/_current/media-archive-rr/node_modules/@react-router/dev/dist/vite.js:3035:35)
+    at runConfigHook (file:///Users/a/_current/media-archive-rr/no
+    at runConfigHook (file:///Users/a/_current/media-archive-rr/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:49444:17)
+    at resolveConfig (file:///Users/a/_current/media-archive-rr/no
+    at resolveConfig (file:///Users/a/_current/media-archive-rr/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:48751:12)
+    at _createServer (file:///Users/a/_current/media-archive-rr/no
+    at _createServer (file:///Users/a/_current/media-archive-rr/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:38329:18)
+    at dev (/Users/a/_current/media-archive-rr/node_modules/@react
+    at dev (/Users/a/_current/media-archive-rr/node_modules/@react-router/dev/dist/cli/index.js:1935:16)
+    at dev2 (/Users/a/_current/media-archive-rr/node_modules/@reac
+    at dev2 (/Users/a/_current/media-archive-rr/node_modules/@react-router/dev/dist/cli/index.js:2103:3)
+    at createConfigLoader (/Users/a/_current/media-archive-rr/node
+    at createConfigLoader (/Users/a/_current/media-archive-rr/node_modules/@react-router/dev/dist/vite.js:575:11)
+    at config (/Users/a/_current/media-archive-rr/node_modules/@re
+    at config (/Users/a/_current/media-archive-rr/node_modules/@react-router/dev/dist/vite.js:3035:35)
+    at runConfigHook (file:///Users/a/_current/media-archive-rr/no
+    at runConfigHook (file:///Users/a/_current/media-archive-rr/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:49444:17)
+    at resolveConfig (file:///Users/a/_current/media-archive-rr/no
+    at resolveConfig (file:///Users/a/_current/media-archive-rr/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:48751:12)
+    at _createServer (file:///Users/a/_current/media-archive-rr/no
+    at _createServer (file:///Users/a/_current/media-archive-rr/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:38329:18)
+    at dev (/Users/a/_current/media-archive-rr/node_modules/@react
+    at dev (/Users/a/_current/media-archive-rr/node_modules/@react-router/dev/dist/cli/index.js:1935:16)
+    at dev2 (/Users/a/_current/media-archive-rr/node_modules/@reac
+    at dev2 (/Users/a/_current/media-archive-rr/node_modules/@react-router/dev/dist/cli/index.js:2103:3)
+    at run2 (/Users/a/_current/media-archive-rr/node_modules/@reac
