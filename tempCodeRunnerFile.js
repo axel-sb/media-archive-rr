@@ -23,4 +23,4 @@ let prompts = []
 let prompt = `llm 'Please describe this image. If the image is severely blurred, underexposed or appears to be taken by accidentally pressing the camera button, please merely reply with: "Scrap."' \
   -a  ${path} \
   -m gemini-2.0-flash`
-  console.log("🟡 prompt", prompt) 
+  console.log("🟡 prompt", prompt)

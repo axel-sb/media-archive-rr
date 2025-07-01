@@ -1,66 +1,40 @@
 # Personal Media Archive
 
-A web application for searching and displaying personal media data stored in a SQLite database with metadata from Google Takeout.
-
-## Project Structure
-
-(requires update)
-
+A web application for searching and displaying personal media data stored in a SQLite database with metadata from the Apple Photos.app database @'/Volumes/Samsung/Pictures/Photos Library.photoslibrary/database'.
 
 ## Technology Stack
 
-- **Frontend**: React, Remix
+- **Data Sourcing** Python v3.13 with 'osxphotos' library-
 - **Database**: SQLite with Prisma ORM
+- **Frontend**: React Router v7
 - **Styling**: TailwindCSS
+
+## Data Import
+
+- Ensure SQLite file is not locked by other processes
+- Confirm sufficient disk space for database operation
+- If Apple Photos permission popup appears, approve access
+
+- Navigate to working directory:
+  ```bash
+  cd /Users/a/_current/media-archive
+  ```
+- Run command from terminal
+  ```bash
+  python3 data/get_all_data.py --exclude-unknown-persons --sqlite data/photos.db
+  ```
+- Verify database updates:
+  ```bash
+  sqlite3 data/photos.db "SELECT COUNT(*) FROM photos;"
+  ```
+- Check schema compliance:
+  ```bash
+  sqlite3 data/photos.db ".schema"
+  ```
 
 ## Features
 
-- Search media by date, location, and description keywords
+- Search media by date, location, Apple machine-learning generated lables etc.
 - View media in a gallery format
 - Display detailed metadata for each media item
 - Map view for geotagged media
-
-## Data Import Process
-
-(requires updated process description)
-
-# Welcome to Remix!
-
-- 📖 [Remix docs](https://remix.run/docs)
-
-## Development
-
-Run the dev server:
-
-```shellscript
-npm run dev
-```
-
-## Deployment
-
-First, build your app for production:
-
-```sh
-npm run build
-```
-
-Then run the app in production mode:
-
-```sh
-npm start
-```
-
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-- `build/server`
-- `build/client`
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.

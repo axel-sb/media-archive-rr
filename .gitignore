@@ -1,4 +1,7 @@
+.venv
+.react-router/
 node_modules
+tempCodeRunnerFile.js
 
 /.cache
 /build

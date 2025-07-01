@@ -16,10 +16,12 @@ type Pages = {
   "/gallery": {
     params: {};
   };
-  "/home": {
-    params: {};
+  "/:uuid": {
+    params: {
+      "uuid": string;
+    };
   };
-  "/map": {
+  "/favorites": {
     params: {};
   };
 };
@@ -27,18 +29,22 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/gallery" | "/home" | "/map";
+    page: "/" | "/gallery" | "/:uuid" | "/favorites";
   };
-  "routes/gallery.tsx": {
+  "./routes/home.tsx": {
+    id: "routes/home";
+    page: "/";
+  };
+  "./routes/gallery.tsx": {
     id: "routes/gallery";
     page: "/gallery";
   };
-  "routes/home.tsx": {
-    id: "routes/home";
-    page: "/home";
+  "./routes/$uuid.tsx": {
+    id: "routes/$uuid";
+    page: "/:uuid";
   };
-  "routes/map.tsx": {
-    id: "routes/map";
-    page: "/map";
+  "./routes/favorites.tsx": {
+    id: "routes/favorites";
+    page: "/favorites";
   };
 };

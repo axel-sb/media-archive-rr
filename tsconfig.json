@@ -1,33 +1,36 @@
 {
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "**/.server/**/*.ts",
-    "**/.server/**/*.tsx",
-    "**/.client/**/*.ts",
-    "**/.client/**/*.tsx"
-  ],
-  "compilerOptions": {
-    "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "types": ["react-router", "vite/client"],
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "jsx": "react-jsx",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "target": "ES2022",
-    "strict": true,
-    "allowJs": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "paths": {
-      "~/*": ["./app/*"]
-    },
+	"include": [
+		".react-router/types/**/*",
+		"**/*.ts",
+		"**/*.tsx",
+		"**/.server/**/*.ts",
+		"**/.server/**/*.tsx",
+		"**/.client/**/*.ts",
+		"**/.client/**/*.tsx"
+	],
+	"compilerOptions": {
+		"rootDirs": [".", "./.react-router/types"],
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["./app/*"]
+		},
+		"verbatimModuleSyntax": true,
+		"lib": ["DOM", "DOM.Iterable", "ES2022"],
+		"types": ["node", "vite/client"],
+		"isolatedModules": true,
+		"esModuleInterop": true,
+		"jsx": "react-jsx",
+		"module": "ES2022",
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"resolveJsonModule": true,
+		"target": "ES2022",
+		"strict": true,
+		"allowJs": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
 
-    // Vite takes care of building everything, not tsc.
-    "noEmit": true
-  }
+		// Vite takes care of building everything, not tsc.
+		"noEmit": true
+	}
 }

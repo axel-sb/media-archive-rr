@@ -1,17 +1,21 @@
+// collapse
+import { useCallback, useState } from "react";
 import {
+    Link,
     Links,
+    type LinksFunction,
     Meta,
     NavLink,
     Outlet,
     Scripts,
     ScrollRestoration,
     useNavigation,
-} from 'react-router'
+} from 'react-router';
 
-import './app.css'
 
-import { LinksFunction } from 'react-router'
+import ToggleButton from './components/toggleButton.tsx'
 
+import './app.css';
 export const links: LinksFunction = () => [
 	{ rel: 'preconnect', href: 'https://fonts.googleapis.com' },
 	{
@@ -31,6 +35,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 			<head>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
+                <meta title='Bilderbuch' />
 				<Meta />
 				<Links />
 			</head>
@@ -45,12 +50,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
 	const navigation = useNavigation()
+	const [showSearch, setShowSearch] = useState(false);
+	const handleToggleSearch = useCallback(() => setShowSearch(s => !s), []);
+
 	return (
-		<div className="flex min-h-screen flex-col bg-gray-700 text-yellow-100 ">
+		<div className="flex min-h-screen flex-col justify-center bg-transparent text-yellow-100 ">
 			{/*//// MARK:HEADER 🟡
 			 */}
 			<header
-				className="grid h-16 w-full px-4 sm:md-6 md:px-8 grid-cols-[1fr_4rem_4rem] gap-4 md:gap-8 place-items-center"
+				className="grid h-16 w-full px-4 sm:px-6 md:px-8 grid-cols-[1fr_4rem_4rem_4rem] gap-4 md:gap-8 place-items-center bg-gray-700 z-10"
 				style={{
 					boxShadow: '0 0 .5rem #000b, 0 0 1rem #0006, 0 0 1.5rem #0004',
 				}}
@@ -58,16 +66,34 @@ export default function App() {
 				<div className="navlink-home inline-flex h-11 w-auto cursor-pointer items-center justify-self-start rounded-md">
 					<NavLink
 						className={`$({ isActive, isPending }) => isActive ? 'active' : 'pending' z-10 inline-flex h-10 w-auto`}
-						to={`home`}
+						to={`/`}
 					>
 						<img
-							src="images/bilderbuch.svg"
+							src="bilderbuch.svg"
 							alt='The homepage title is "Bilderbuch"'
 							className="justify-self-start object-contain"
 						/>
 					</NavLink>
 				</div>
 
+				<div className="toggle-button-wrapper inline-flex h-11 w-11 cursor-pointer justify-center self-center justify-self-end rounded-md">
+					<ToggleButton
+						className="toggle-button inline-flex h-10 w-10 rounded-full justify-center items-end"
+						onToggle={handleToggleSearch}
+						isActive={showSearch}
+					>
+						<img
+							src="magnifier.svg"
+							alt=""
+							className={`w-10 h-10 pt-1 object-contain ${showSearch ? 'hidden' : 'block'}`}
+						/>
+						<img
+							src="x.svg"
+							alt=""
+							className={`w-8 h-8 p-1 object-contain ${showSearch ? 'block' : 'hidden'}`}
+						/>
+					</ToggleButton>
+				</div>
 				<div className="navlink-gallery inline-flex h-10 w-14 cursor-pointer justify-end self-center justify-self-end rounded-md">
 					<NavLink
 						className={`$({ isActive, isPending }) => isActive ? 'active' : 'pending' z-10 inline-flex h-10 w-10 justify-center text-foreground`}
@@ -95,23 +121,30 @@ export default function App() {
 				</div>
 			</header>
 
-			<main className="flex flex-col flex-grow w-screen min-h-0">
+			<main className="flex flex-col flex-grow w-screen px-4 justify-center bg-gradient-to-b from-gray-700  via-gray-950 via-30% to-gray-950">
 				{navigation.state === 'loading' ? (
 					<div className="flex h-64 items-center justify-center">
 						<div className="h-12 w-12 animate-spin rounded-full border-t-2 border-b-2 border-blue-500"></div>
 					</div>
 				) : (
-					<Outlet />
+					<Outlet context={{ showSearch, handleToggleSearch }} />
 				)}
 			</main>
 
 			{/*//// MARK:FOOTER 🟡
 			 */}
 
-			<footer className="flex items-base justify-center w-full px-4 bg-transparent">
+			<footer className="flex items-center justify-between w-full h-18 px-4 bg-gray-900 border-transparent border-t-gray-500/25 border text-gray-600">
+				<Link
+					to="https://rhettbull.github.io/osxphotos/index.html"
+					viewTransition
+				>
+					osxphotos docs
+				</Link>
 				<NavLink
-					className={`$({ isActive, isPending }) => isActive ? 'active' : 'pending' z-10 inline-flex h-10 w-auto justify-center text-foreground`}
-					to={`home`}
+					to={'/'}
+					className={`$({ isActive, isPending }) => isActive ? 'active' : 'pending' z-10 inline-flex h-10 w-auto justify-center items-center`}
+					viewTransition
 				>
 					<p
 						style={{
@@ -121,10 +154,9 @@ export default function App() {
 							fontStyle: 'normal',
 							fontVariationSettings:
 								'"BLED" 0, "SCAN" 0, "XELA" -23, "YELA" 20',
-							lineHeight: '.2',
 							filter: 'grayscale(1)',
 						}}
-						className="text-3xl text-shadow-lg/50 mb-6"
+						className="text-3xl text-shadow-lg/50"
 					>
 						k62
 					</p>

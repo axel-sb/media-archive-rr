@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Sample query command for osxphotos. Prints out the filename and date (and all other specified keys) of each photo in JSON format."""
+"""This script os based on an example script from the osxphotos website (https://rhettbull.github.io/osxphotos/API_README.html#additional-examples). It extracts data from the SQLite database of the Apple Photos app ('~/Pictures/Photos Library.photoslibrary/database') and creates a new database in the project directory's data folder.
+"""
 
 from __future__ import annotations
 
@@ -551,8 +552,20 @@ def example(exclude_unknown_persons, sqlite, photos: list[osxphotos.PhotoInfo], 
         cursor.execute('INSERT OR IGNORE INTO face_eye_makeup_types VALUES (0, "Not Wearing Eye Makeup")')
         cursor.execute('INSERT OR IGNORE INTO face_eye_makeup_types VALUES (1, "Wearing Eye Makeup")')
 
+        SOURCE_PREFIX = "/Volumes/Samsung/Pictures/Photos Library.photoslibrary/"
+        WEB_PREFIX = "images/Photos Library.photoslibrary/"
+
+        def normalize_path(abs_path):
+            if abs_path and abs_path.startswith(SOURCE_PREFIX):
+                return abs_path.replace(SOURCE_PREFIX, WEB_PREFIX)
+            return abs_path
+
         # Insert data into tables
         for photo_data in all_photos:
+            # Normalize paths before inserting into the database
+            normalized_path = normalize_path(photo_data["path"])
+            normalized_path_edited = normalize_path(photo_data["path_edited"])
+
             # Insert into photos table
             location = photo_data["location"]
             cursor.execute('''
@@ -562,8 +575,8 @@ def example(exclude_unknown_persons, sqlite, photos: list[osxphotos.PhotoInfo], 
                 photo_data["original_filename"],
                 photo_data["date"].isoformat() if photo_data["date"] else None,
                 photo_data["title"],
-                photo_data["path"],
-                photo_data["path_edited"],
+                normalized_path,  # Overwrite with normalized path
+                normalized_path_edited,  # Overwrite with normalized path_edited
                 1 if photo_data["has_raw"] else 0,
                 photo_data["height"],
                 photo_data["width"],

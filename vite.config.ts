@@ -1,11 +1,10 @@
 import { reactRouter } from '@react-router/dev/vite'
 import tailwindcss from '@tailwindcss/vite'
 import { reactRouterDevTools } from 'react-router-devtools'
-import devtoolsJson from 'vite-plugin-devtools-json'
 import { defineConfig } from 'vite'
-import { denyImports } from 'vite-env-only'
-import { envOnlyMacros } from 'vite-env-only'
-
+import devtoolsJson from 'vite-plugin-devtools-json'
+// import { denyImports, envOnlyMacros } from 'vite-env-only'
+import tsconfigPaths from 'vite-tsconfig-paths'
 
 declare module 'react-router' {
 	interface Future {
@@ -15,19 +14,25 @@ declare module 'react-router' {
 
 export default defineConfig({
 	plugins: [
-		tailwindcss(),
-		reactRouter(),
 		reactRouterDevTools(),
+		reactRouter(),
+		tailwindcss(),
 		devtoolsJson(),
-		envOnlyMacros(),
-		denyImports({
-			client: {
-				specifiers: ['fs-extra', /^node:/, '@prisma/*'],
-				files: ['**/.server/*', '**/*.server.*'],
-			},
-			server: {
-				specifiers: ['jquery'],
-			},
-		}),
+		// envOnlyMacros(),
+		tsconfigPaths(),
+
+		// denyImports({
+		//	client: {
+		//		specifiers: ['fs-extra', '@prisma/*'],
+		//		files: ['**/.server/*', '**/*.server.*'],
+		//	},
+		//	server: {
+		//		specifiers: ['jquery'],
+		//	},
+		// }),
 	],
+	server: {
+		open: 'http://localhost:5173/',
+		host: true, // local network
+	},
 })

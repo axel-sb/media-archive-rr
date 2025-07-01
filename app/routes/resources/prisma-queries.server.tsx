@@ -1,35 +1,15 @@
-import { PrismaClient } from "../../../prisma/generated"
-import { photos } from 'prisma/generated'
+import { type photos, PrismaClient } from '../../../prisma/generated'
 
 const prisma = new PrismaClient()
-
-export function getImagesbyKeyword(q: string) {
+export function getByMultipleDetails(
+	q: string,
+	qStartDate: string,
+	qEndDate: string,
+    qFavorite: number
+) {
 	return prisma.photos.findMany({
-		select: {
-			uuid: true,
-			original_filename: true,
-			title: true,
-			path: true,
-			path_edited: true,
-			has_raw: true,
-			description: true,
-			height: true,
-			width: true,
-			date: true,
-			favorite: true,
-			latitude: true,
-			longitude: true,
-			portrait: true,
-			hdr: true,
-			panorama: true,
-			faces: true,
-			keywords: true,
+		include: {
 			labels: true,
-			photo_albums: true,
-			photo_persons: true,
-			place_addresses: true,
-			place_names: true,
-			places: true,
 		},
 		where: {
 			OR: [
@@ -37,10 +17,19 @@ export function getImagesbyKeyword(q: string) {
 				{ keywords: { some: { keyword: { contains: q } } } },
 				{ labels: { some: { label: { contains: q } } } },
 			],
+			AND: [
+				{
+					date: {
+						lte: qEndDate,
+						gte: qStartDate,
+					},
+				},
+				{ favorite: { equals: qFavorite } },
+			],
 		},
-		orderBy: { date: 'desc' },
+		orderBy: { date: 'asc' },
 		skip: 0,
-		take: 2,
+		take: 90,
 	})
 }
 

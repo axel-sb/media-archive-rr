@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+main img {
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+}
+
+/* media queries */
+
+/*
+Breakpoint 1: 0-200px
+Breakpoint 2: 200px-500px
+Breakpoint 2: 500px and up
+*/
+
+@media (width < 200px) {
+  .hide-small {
+    display: none;
+  }
+}
+
+@media (200px <= width < 500px) {
+  .hide-medium {
+    display: none;
+  }
+}
+
+@media (500px <= width) {
+  .hide-large {
+    display: none;
+  }
+}
+
+/* modal _ _ _ _ _ _ _ _ _ ___  */
+
+/* .modal-wrapper {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 50%;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+} */
+
+/* // figure with same-width text https://codepen.io/5t3ph/pen/JodpOOR */
+figure {
+  /* original - shrink to fit element */
+  /* display: inline-block;  */
+
+/*   Update - Swap to fit-content to retain margin access */
+  inline-size: fit-content;
+  margin-inline: auto;
+}
+figcaption {
+  /* no size contribution for figcaption */
+  contain: inline-size;
+}
+img {
+  /* you can have max-width */
+  max-width: 100%;
+}
