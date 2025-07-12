@@ -13,7 +13,7 @@ import {
 } from 'react-router';
 
 
-import ToggleButton from './components/toggleButton.tsx'
+import ToggleButton from './components/toggleButton.tsx';
 
 import './app.css';
 export const links: LinksFunction = () => [
@@ -35,7 +35,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 			<head>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
-                <meta title='Bilderbuch' />
+                <meta title='* Bilderbuch' />
 				<Meta />
 				<Links />
 			</head>
@@ -50,11 +50,25 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
 	const navigation = useNavigation()
-	const [showSearch, setShowSearch] = useState(false);
+	const [showSearch, setShowSearch] = useState(true);
 	const handleToggleSearch = useCallback(() => setShowSearch(s => !s), []);
 
 	return (
-		<div className="flex min-h-screen flex-col justify-center bg-transparent text-yellow-100 ">
+		<>
+			<div
+				className="flex flex-col justify-center bg-transparent text-yellow-100"
+				style={{
+					backgroundColor: 'rgba(255, 255, 255, 0.05)',
+					maskImage: 'url(images/leaves.avif)',
+					maskSize: 'cover',
+					maskRepeat: 'no-repeat',
+					maskPosition: 'center center',
+					position: 'absolute',
+					width: '100vw',
+					height: '110vh',
+					inset: '0',
+				}}
+			></div>
 			{/*//// MARK:HEADER 🟡
 			 */}
 			<header
@@ -63,9 +77,9 @@ export default function App() {
 					boxShadow: '0 0 .5rem #000b, 0 0 1rem #0006, 0 0 1.5rem #0004',
 				}}
 			>
-				<div className="navlink-home inline-flex h-11 w-auto cursor-pointer items-center justify-self-start rounded-md">
+				<div className="navlink-home inline-flex h-9 w-auto cursor-pointer items-center justify-self-start rounded-md">
 					<NavLink
-						className={`$({ isActive, isPending }) => isActive ? 'active' : 'pending' z-10 inline-flex h-10 w-auto`}
+						className={`$({ isActive, isPending }) => isActive ? 'active' : 'pending' z-10 inline-flex h-9 w-auto`}
 						to={`/`}
 					>
 						<img
@@ -76,16 +90,16 @@ export default function App() {
 					</NavLink>
 				</div>
 
-				<div className="toggle-button-wrapper inline-flex h-11 w-11 cursor-pointer justify-center self-center justify-self-end rounded-md">
+				<div className="toggle-button-wrapper inline-flex h-9 w-9 cursor-pointer justify-center self-center justify-self-end rounded-md">
 					<ToggleButton
-						className="toggle-button inline-flex h-10 w-10 rounded-full justify-center items-end"
+						className="toggle-button inline-flex h-9 w-9 rounded-full justify-center items-end"
 						onToggle={handleToggleSearch}
 						isActive={showSearch}
 					>
 						<img
 							src="magnifier.svg"
 							alt=""
-							className={`w-10 h-10 pt-1 object-contain ${showSearch ? 'hidden' : 'block'}`}
+							className={`w-9 h-9 pt-1 object-contain ${showSearch ? 'hidden' : 'block'}`}
 						/>
 						<img
 							src="x.svg"
@@ -94,9 +108,9 @@ export default function App() {
 						/>
 					</ToggleButton>
 				</div>
-				<div className="navlink-gallery inline-flex h-10 w-14 cursor-pointer justify-end self-center justify-self-end rounded-md">
+				<div className="navlink-gallery inline-flex h-9 w-14 cursor-pointer justify-end self-center justify-self-end rounded-md">
 					<NavLink
-						className={`$({ isActive, isPending }) => isActive ? 'active' : 'pending' z-10 inline-flex h-10 w-10 justify-center text-foreground`}
+						className={`$({ isActive, isPending }) => isActive ? 'active' : 'pending' z-10 inline-flex h-9 w-9 justify-center text-foreground`}
 						to={`gallery`}
 					>
 						<img
@@ -107,21 +121,21 @@ export default function App() {
 					</NavLink>
 				</div>
 
-				<div className="navlink-map inline-flex h-10 w-14 cursor-pointer justify-center self-center justify-self-center rounded-md">
+				<div className="navlink-map inline-flex h-9 w-14 cursor-pointer justify-center self-center justify-self-center rounded-md">
 					<NavLink
-						className={`$({ isActive, isPending }) => isActive ? 'active' : 'pending' z-10 inline-flex h-10 w-10 justify-center text-foreground`}
+						className={`$({ isActive, isPending }) => isActive ? 'active' : 'pending' z-10 inline-flex h-9 w-9 justify-center text-foreground`}
 						to={`map`}
 					>
 						<img
 							src="map.svg"
 							alt='The homepage title is "Bilderbuch"'
-							className="flex-grow sm:max-h-10 md:max-h-14 will-change-auto object-contain"
+							className="flex-grow sm:max-h-9 md:max-h-14 will-change-auto object-contain"
 						/>
 					</NavLink>
 				</div>
 			</header>
 
-			<main className="flex flex-col flex-grow w-screen px-4 justify-center bg-gradient-to-b from-gray-700  via-gray-950 via-30% to-gray-950">
+			<main className="flex flex-col flex-grow w-screen min-h-dvh p-4 md:p-8 justify-center items-center bg-gradient-to-b from-gray-700  via-gray-950 via-30% to-gray-950">
 				{navigation.state === 'loading' ? (
 					<div className="flex h-64 items-center justify-center">
 						<div className="h-12 w-12 animate-spin rounded-full border-t-2 border-b-2 border-blue-500"></div>
@@ -146,22 +160,9 @@ export default function App() {
 					className={`$({ isActive, isPending }) => isActive ? 'active' : 'pending' z-10 inline-flex h-10 w-auto justify-center items-center`}
 					viewTransition
 				>
-					<p
-						style={{
-							fontFamily: '"Sixtyfour Convergence", sans-serif',
-							fontOpticalSizing: 'auto',
-							fontWeight: '400',
-							fontStyle: 'normal',
-							fontVariationSettings:
-								'"BLED" 0, "SCAN" 0, "XELA" -23, "YELA" 20',
-							filter: 'grayscale(1)',
-						}}
-						className="text-3xl text-shadow-lg/50"
-					>
-						k62
-					</p>
+					<p className="text-3xl text-shadow-lg/50">k62</p>
 				</NavLink>
 			</footer>
-		</div>
+		</>
 	)
 }

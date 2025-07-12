@@ -3,19 +3,13 @@ import {
     Form,
     Link,
     type LoaderFunctionArgs,
-    type MetaFunction,
-    useLoaderData,
     useOutletContext,
 } from 'react-router'
+import type { Route } from './+types/home'
 import './css/home.css'
 import { getByMultipleDetails } from './resources/prisma-queries.server'
 
-type RootContextType = {
-	showSearch: boolean
-	handleToggleSearch: () => void
-}
-
-export const meta: MetaFunction = () => {
+export function meta() {
 	return [
 		{ title: '* Personal Media Archive' },
 		{
@@ -23,6 +17,11 @@ export const meta: MetaFunction = () => {
 			content: 'Search and browse your personal media collection',
 		},
 	]
+}
+
+type RootContextType = {
+	showSearch: boolean
+	handleToggleSearch: () => void
 }
 
 {
@@ -45,8 +44,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 	return { data, q, qStartDate, qEndDate, qFavorite }
 }
 
-export default function Home() {
-	const { data, q } = useLoaderData<typeof loader>()
+export default function Home({ loaderData }: Route.ComponentProps) {
+	const { data, q } = loaderData
 	const { showSearch } = useOutletContext<RootContextType>()
 	const [hoveredPhoto, setHoveredPhoto] = useState<string | null>(null)
 	// const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
@@ -75,6 +74,7 @@ export default function Home() {
 
 	return (
 		<div className="relative">
+			{/*{' '}
 			<div
 				style={{
 					backgroundColor: 'rgba(255, 255, 255, 0.05)',
@@ -84,92 +84,64 @@ export default function Home() {
 					maskPosition: 'center center',
 					position: 'absolute',
 					width: '100vw',
-					height: '100vh',
+					height: '110vh',
 					inset: '0',
 				}}
-			></div>
+			></div>{' '}
+			*/}
 			<div className="size-full mx-auto pt-0 sm:p-14 max-w-4xl rounded-lg shadow-md">
 				<Form
 					className={`max-w-sm mx-auto ${showSearch ? 'opacity-100 block' : 'opacity-0 hidden'}`}
 				>
-					<div className="flex justify-end">
-						<label
-							htmlFor="mediaType"
-							className="collapse mt-6 mb-1 block w-32 text-sm font-medium text-gray-400 hover:visible"
-						>
-							Media Type
-						</label>
-						<select
-							id="mediaType"
-							className="mt-2 w-20 appearance-none rounded-md my-4 px-4 py-2 font-medium border-1 border-gray-700 bg-gray-800 text-gray-400 hover:focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none focus:border-blue-500"
-						>
-							<option value="">All</option>
-							<option value="image">Images</option>
-							<option value="video">Videos</option>
-						</select>
-					</div>
-
-					<div>
-						<label
-							htmlFor="favorite"
-							className="mt-2 mb-4 w-14 h-10 appearance-none rounded-sm my-4 px-4 py-2 font-medium border-1 border-gray-700 bg-gray-800 text-gray-400 hover:focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none focus:border-blue-500 checked:bg-gray-500 checked:border-gray-950 checked:border-2 checked:border-double"
-						>
-							♥️
-						</label>
-						<input
-							type="checkbox"
-							name="favorite"
-							id="favorite"
-							value="1"
-							defaultChecked={false}
-							className="invisible mt-4 mb-2"
-						/>
-					</div>
-
-					<div className="space-y-2">
-						<label
-							className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-1"
-							htmlFor="with-icon"
-						>
-							Search Input
-						</label>
-						<div className="relative">
-							<input
-								className="flex h-9 w-full mt-4 mb-2 rounded-md border-1 border-gray-700 bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-8"
-								id="with-icon"
-								placeholder="Search..."
-							/>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="#99a1af"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground"
+					<div className="hidden justify-end">
+						<div className="hidden">
+							<label
+								htmlFor="mediaType"
+								className="collapse mt-6 mb-1 block w-32 text-sm font-medium text-gray-400 hover:visible"
 							>
-								<circle cx="11" cy="11" r="8"></circle>
-								<path d="m21 21-4.35-4.35"></path>
-							</svg>
+								Media Type
+							</label>
+							<select
+								id="mediaType"
+								className="mt-2 w-20 appearance-none rounded-md my-2 px-4 font-medium border-1 border-gray-700 bg-gray-800 text-gray-400 hover:focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none focus:border-blue-500"
+							>
+								<option value="">All</option>
+								<option value="image">Images</option>
+								<option value="video">Videos</option>
+							</select>
+						</div>
+
+						<div>
+							<label
+								htmlFor="favorite"
+								className="mt-2 mb-4 w-14 h-10 appearance-none rounded-sm  my-4 px-4 py-2 font-medium border-1 border-gray-700 bg-gray-800 text-gray-400 hover:focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none focus:border-[#a1a1a1]  checked:border-gray-950 checked:border-2 checked:opacity-100"
+							>
+								♥️
+							</label>
+							<input
+								type="checkbox"
+								name="favorite"
+								id="favorite"
+								value="1"
+								defaultChecked={false}
+								className="invisible mt-4 mb-6"
+							/>
 						</div>
 					</div>
 
-					<label
-						htmlFor="searchParams"
-						className="mb-1 block text-sm font-medium text-gray-700"
-					>
-						Search Term
-					</label>
-
-					<div className="relative">
+					<div className="space-y-2 relative">
+						<label
+							htmlFor="searchParams"
+							className="mb-1 block text-sm font-medium text-gray-700"
+						>
+							Search Term
+						</label>
 						<input
 							type="text"
 							id="searchParams"
 							name="q"
-                            className="flex h-9 w-full mt-2 mb-4 rounded-md border-1 border-gray-700 bg-transparent pr-3 pl-8 py-2 text-base shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1"
-							/* className="flex w-full appearance-none rounded-md mt-2 mb-4 px-4 pl-8 py-2 font-medium border-1 border-gray-700 bg-transparent placeholder:text-muted-foreground focus:ring-yellow-100 focus:ring-offset-2 focus:outline-none focus-visible:outline-none focus-visible:ring-1 transition-colors duration-300"
-							placeholder="Search image descriptions, locations, etc." */
+							className="w-full mt-2 mb-4 pl-8 py-2 font-medium rounded-md bg-transparent appearance-none border-1 border-gray-700 text-gray-400 hover:focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 focus:outline-none focus:border-[#a1a1a1]  transition-colors duration-300"
+							placeholder="Search image descriptions, locations, etc."
 						/>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -179,7 +151,7 @@ export default function Home() {
 							strokeWidth="2"
 							strokeLinecap="round"
 							strokeLinejoin="round"
-							className="absolute left-2.5 top-2.5 h-[1lh] w-4 text-muted-foreground"
+							className="absolute left-2.5 top-11.5 h-4 w-4 text-muted-foreground text-muted-foreground"
 						>
 							<circle cx="11" cy="11" r="8"></circle>
 							<path d="m21 21-4.35-4.35"></path>
@@ -198,7 +170,7 @@ export default function Home() {
 								id="startDate"
 								name="qStartDate"
 								defaultValue="1970-01-01"
-								className="mt-2 w-full appearance-none rounded-md my-4 px-4 py-2 font-medium border-1 border-gray-700 bg-transparent text-gray-400 hover:focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none focus:border-blue-500"
+								className="mt-2 w-full appearance-none rounded-md my-4 px-4 py-2 font-medium border-1 border-gray-700 bg-transparent text-gray-400 hover:focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none focus:border-[#a1a1a1]"
 							/>
 						</div>
 
@@ -214,14 +186,14 @@ export default function Home() {
 								id="endDate"
 								name="qEndDate"
 								defaultValue={todayFormatted}
-								className="mt-2 w-full appearance-none rounded-md my-4 px-4 py-2 font-medium border-1 border-gray-700 bg-transparent text-gray-400 hover:focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none "
+								className="mt-2 w-full appearance-none rounded-md my-4 px-4 py-2 font-medium border-1 border-gray-700 bg-transparent text-gray-400 hover:focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none focus:border-[#a1a1a1]"
 							/>
 						</div>
 					</div>
-					<div className="my-6 flex justify-end">
+					<div className="w-full my-6 flex justify-end">
 						<button
 							type="submit"
-							className="mt-2 w-full appearance-none rounded-md my-4 px-4 py-2 font-medium border-1 border-gray-700 bg-transparent text-gray-400 hover:focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none"
+							className="mt-2 w-24 appearance-none rounded-md my-4 px-4 py-2 font-medium border-1 border-gray-700 bg-transparent text-gray-400 hover:focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none"
 						>
 							Search
 						</button>
@@ -256,7 +228,7 @@ export default function Home() {
 					</Link>
 				</h2>
 
-				{/* //// MARK:IMAGES _________________________________________🎞️
+				{/* //// MARK:IMGs _________________________________________🎞️
 				 */}
 				<div className="grid w-full pb-7 mx-auto justify-center-safe grid-cols-6 gap-1 text-base sm:grid-cols-9 md:grid-cols-12 lg:grid-cols-15 xl:grid-cols-18">
 					{data?.map((photo) => (
@@ -275,7 +247,7 @@ export default function Home() {
 									<img
 										src={`${photo.path}`}
 										alt=""
-										className="h-full w-full object-cover"
+										className="h-full w-full object-contain"
 									/>
 								)}
 
@@ -290,13 +262,13 @@ export default function Home() {
 				{/* Hover Modal */}
 				{hoveredPhoto && (
 					<div
-						className="relative z-50 w-full dark:shadow max-w-5xl darker-dropdown-background 2xl:mx-0 mx-0 sm:mx-8 sm:my-10 sm:rounded-lg transform transition-transform ease-in-out opacity-100 scale-100 pointer-events-none"
+						className="absolute top z-50 w-full max-w-70 mx-auto place-items-center-safe dark:shadow h-auto darker-dropdown-background sm:rounded-lg transform transition-transform ease-in-out opacity-100 scale-100 pointer-events-none"
 						/* style={{
 							left: mousePosition.x + 10,
 							top: mousePosition.y + 10,
 						}} */
 					>
-						<div className="bg-black bg-opacity-90 rounded-lg p-2 shadow-2xl border border-gray-600">
+						<div className="inset-0 w-full h-full bg-black bg-opacity-90 rounded-lg p-2 shadow-2xl border border-gray-600">
 							{(() => {
 								const photo = data?.find((photo) => photo.uuid === hoveredPhoto)
 								return (
@@ -304,7 +276,7 @@ export default function Home() {
 										<img
 											src={photo.path}
 											alt=""
-											className="w-64 h-64 object-cover rounded"
+											className="w-1/2 h-64 object-cover rounded"
 										/>
 									)
 								)

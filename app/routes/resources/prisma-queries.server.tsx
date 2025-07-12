@@ -25,6 +25,7 @@ export function getByMultipleDetails(
 					},
 				},
 				{ favorite: { equals: qFavorite } },
+				{ path: { not: null } },
 			],
 		},
 		orderBy: { date: 'asc' },

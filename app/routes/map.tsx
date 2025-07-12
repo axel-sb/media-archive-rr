@@ -1,13 +1,12 @@
-// @collapse
-import { MetaFunction } from 'react-router'
+// @//collapse
 import { useEffect } from 'react'
 
-export const meta: MetaFunction = () => {
+export function meta() {
 	return [
-		{ title: 'Map View | Personal Media Archive' },
+		{ title: '* Personal Media Archive' },
 		{
 			name: 'description',
-			content: 'View your personal media collection on a map',
+			content: 'Search and browse your personal media collection on a map 🗺️',
 		},
 	]
 }

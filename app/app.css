@@ -1,45 +1,49 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	--font-sans:
+		'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+		'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
 html,
 body {
-  @apply bg-gray-800 dark:bg-gray-950;
+	@apply bg-gray-800 dark:bg-gray-950;
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+	@media (prefers-color-scheme: dark) {
+		color-scheme: dark;
+	}
 }
 
 footer {
 
+		font-family: 'Sixtyfour Convergence', sans-serif;
+		font-optical-sizing: auto;
+		font-weight: 400;
+		font-style: normal;
+		font-variation-settings:
+			'BLED' 0,
+			'SCAN' 0,
+			'XELA' 50,
+			'YELA' 10;
+		filter: grayscale(1);
+	
 
-    p {
-        font-family: "Sixtyfour Convergence", sans-serif;
-        font-optical-sizing: auto;
-        font-weight: 400;
-        font-style: normal;
-        font-variation-settings:
-            "BLED" 0,
-            "SCAN" 0,
-            "XELA" 50,
-            "YELA" 10;
-    }
-
-    &:hover {
-        transition-property: opacity, transform;
-        font-family: 'Sixtyfour Convergence';
-        font-weight: 400;
-        font-style: normal;
-        font-stretch: normal;
-        font-variation-settings: "BLED" 0, "SCAN" 0, "XELA" 100, "YELA" 100;
-        font-optical-sizing: none;
-        opacity: 1;
-        line-height: initial;
-        transition-duration: 350ms;
-        border-left-color: #0c5;
-    }
+	&:hover {
+		transition-property: opacity, transform;
+		font-family: 'Sixtyfour Convergence';
+		font-weight: 400;
+		font-style: normal;
+		font-stretch: normal;
+		font-variation-settings:
+			'BLED' 0,
+			'SCAN' 0,
+			'XELA' 100,
+			'YELA' 100;
+		font-optical-sizing: none;
+		opacity: 1;
+		line-height: initial;
+		transition-duration: 350ms;
+		filter: grayscale(0);
+	}
 }
