@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
     Form,
     Link,
     type LoaderFunctionArgs,
-    useOutletContext,
+    useOutletContext
 } from 'react-router'
 import type { Route } from './+types/home'
 import './css/home.css'
@@ -47,7 +47,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export default function Home({ loaderData }: Route.ComponentProps) {
 	const { data, q } = loaderData
 	const { showSearch } = useOutletContext<RootContextType>()
-	const [hoveredPhoto, setHoveredPhoto] = useState<string | null>(null)
+	const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null)
+
+	// Check if we're in a loading state (for form submissions)
+	const isSearching = false // We'll implement this properly later
 	// const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
 	const today = new Date()
@@ -58,37 +61,38 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 	// const [show, setShow] = useState(false)
 	// const handleToggle = useCallback(() => setShow((show: unknown) => !show), [])
 
-	const handleMouseEnter = (
-		photoUuid: string /* event: React.MouseEvent */,
-	) => {
-		setHoveredPhoto(photoUuid)
-		/*setMousePosition({ x: event.clientX, y: event.clientY })*/
+	const handlePhotoClick = (photoUuid: string, event: React.MouseEvent) => {
+		event.preventDefault()
+		setSelectedPhoto(photoUuid)
 	}
 
-	const handleMouseLeave = () => {
-		setHoveredPhoto(null)
+	const handleCloseModal = () => {
+		setSelectedPhoto(null)
 	}
-	/*const handleMouseMove = (event: React.MouseEvent) => {
-		 setMousePosition({ x: event.clientX, y: event.clientY })
-	}*/
+
+	const handleModalBackdropClick = (event: React.MouseEvent) => {
+		if (event.target === event.currentTarget) {
+			handleCloseModal()
+		}
+	}
+
+	// Handle Escape key to close modal
+	useEffect(() => {
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.key === 'Escape' && selectedPhoto) {
+				handleCloseModal()
+			}
+		}
+
+		if (selectedPhoto) {
+			document.addEventListener('keydown', handleKeyDown)
+			return () => document.removeEventListener('keydown', handleKeyDown)
+		}
+	}, [selectedPhoto])
 
 	return (
 		<div className="relative">
-			{/*{' '}
-			<div
-				style={{
-					backgroundColor: 'rgba(255, 255, 255, 0.05)',
-					maskImage: 'url(images/leaves.avif)',
-					maskSize: 'cover',
-					maskRepeat: 'no-repeat',
-					maskPosition: 'center center',
-					position: 'absolute',
-					width: '100vw',
-					height: '110vh',
-					inset: '0',
-				}}
-			></div>{' '}
-			*/}
+
 			<div className="size-full mx-auto pt-0 sm:p-14 max-w-4xl rounded-lg shadow-md">
 				<Form
 					className={`max-w-sm mx-auto ${showSearch ? 'opacity-100 block' : 'opacity-0 hidden'}`}
@@ -230,66 +234,121 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 
 				{/* //// MARK:IMGs _________________________________________🎞️
 				 */}
-				<div className="grid w-full pb-7 mx-auto justify-center-safe grid-cols-6 gap-1 text-base sm:grid-cols-9 md:grid-cols-12 lg:grid-cols-15 xl:grid-cols-18">
-					{data?.map((photo) => (
-						<div
-							key={photo.uuid}
-							className="relative"
-							onMouseEnter={(/* e */) => handleMouseEnter(photo.uuid /* e */)}
-							onMouseLeave={handleMouseLeave}
-							/* onMouseMove={handleMouseMove} */
-						>
-							<Link
-								to={`${photo.uuid}`}
-								className="grid aspect-square place-content-center place-items-center rounded-xs transition-opacity hover:opacity-80"
+				{isSearching ? (
+					// Loading skeleton for search results
+					<div className="grid w-full pb-7 mx-auto justify-center-safe grid-cols-6 gap-1 text-base sm:grid-cols-9 md:grid-cols-12 lg:grid-cols-15 xl:grid-cols-18">
+						{Array.from({ length: 18 }).map((_, index) => (
+							<div key={index} className="aspect-square">
+								<div className="w-full h-full animate-pulse bg-gray-300 dark:bg-gray-700 rounded-md" />
+							</div>
+						))}
+					</div>
+				) : (
+					<div className="grid w-full pb-7 mx-auto justify-center-safe grid-cols-6 gap-1 text-base sm:grid-cols-9 md:grid-cols-12 lg:grid-cols-15 xl:grid-cols-18">
+						{data?.map((photo) => (
+
+							<button
+								key={photo.uuid}
+								className="relative cursor-pointer w-full h-full bg-transparent border-none p-0"
+								onClick={(e) => handlePhotoClick(photo.uuid, e)}
+								aria-label={`View ${photo.title || photo.description || 'media item'}`}
 							>
-								{photo?.path && (
-									<img
-										src={`${photo.path}`}
-										alt=""
-										className="h-full w-full object-contain"
-									/>
-								)}
-
-								<p className="absolute top-4 left-2 hidden max-w-[calc(100%-1rem)] rounded-sm p-2 text-[20px] break-words whitespace-normal text-[#222] hover:block">
-									{photo.title}
-								</p>
-							</Link>
-						</div>
-					))}
-				</div>
-
-				{/* Hover Modal */}
-				{hoveredPhoto && (
-					<div
-						className="absolute top z-50 w-full max-w-70 mx-auto place-items-center-safe dark:shadow h-auto darker-dropdown-background sm:rounded-lg transform transition-transform ease-in-out opacity-100 scale-100 pointer-events-none"
-						/* style={{
-							left: mousePosition.x + 10,
-							top: mousePosition.y + 10,
-						}} */
-					>
-						<div className="inset-0 w-full h-full bg-black bg-opacity-90 rounded-lg p-2 shadow-2xl border border-gray-600">
-							{(() => {
-								const photo = data?.find((photo) => photo.uuid === hoveredPhoto)
-								return (
-									photo?.path && (
+								<div className="grid aspect-square place-content-center place-items-center rounded-xs transition-opacity hover:opacity-80">
+									{photo?.path && (
 										<img
-											src={photo.path}
-											alt=""
-											className="w-1/2 h-64 object-cover rounded"
+											src={`${photo.path}`}
+											alt={photo.title || photo.description || 'Media item'}
+											className="h-full w-full object-contain"
 										/>
-									)
-								)
-							})()}
+									)}
+
+									<p className="absolute top-4 left-2 hidden max-w-[calc(100%-1rem)] rounded-sm p-2 text-[20px] break-words whitespace-normal text-[#222] hover:block">
+										{photo.title}
+									</p>
+								</div>
+							</button>
+						))}
+					</div>
+				)}
+
+				{/* Error state */}
+				{!isSearching && data && data.length === 0 && q && (
+					<div className="text-center py-12">
+						<div className="text-gray-400 mb-4">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								className="h-16 w-16 mx-auto"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth={1}
+									d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+								/>
+							</svg>
+						</div>
+						<p className="text-lg text-gray-600">No results found</p>
+						<p className="text-sm text-gray-500 max-w-md mx-auto mt-2">
+							Try adjusting your search terms or date range.
+						</p>
+					</div>
+				)}
+
+				{/* Click Modal */}
+				{selectedPhoto && (
+					<div
+						className="fixed inset-0 z-50 flex items-center justify-center p-4"
+						role="dialog"
+						aria-modal="true"
+					>
+						{/* Backdrop */}
+						<button
+							className="absolute inset-0 bg-black bg-opacity-75 border-none cursor-default"
+							onClick={handleModalBackdropClick}
+							aria-label="Close modal"
+						/>
+
+						{/* Modal content */}
+						<div className="relative max-w-4xl max-h-full bg-white rounded-lg shadow-2xl overflow-hidden z-10">
+							{/* Close button */}
+							<button
+								onClick={handleCloseModal}
+								className="absolute top-4 right-4 z-10 bg-black bg-opacity-50 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-opacity-75 transition-colors"
+								aria-label="Close modal"
+							>
+								×
+							</button>
+
 							{(() => {
-								const photo = data?.find((photo) => photo.uuid === hoveredPhoto)
-								return (
-									photo?.title && (
-										<p className="text-white text-sm mt-2 max-w-64 break-words">
-											{photo.title}
-										</p>
-									)
-								)
+								const photo = data?.find((photo) => photo.uuid === selectedPhoto)
+								return photo ? (
+									<div className="flex flex-col">
+										{photo.path && (
+											<img
+												src={photo.path}
+												alt={photo.title || photo.description || 'Media item'}
+												className="max-w-full max-h-[80vh] object-contain"
+											/>
+										)}
+										{(photo.title || photo.description) && (
+											<div className="p-4 bg-gray-50">
+												{photo.title && (
+													<h3 className="text-lg font-semibold text-gray-900 mb-2">
+														{photo.title}
+													</h3>
+												)}
+												{photo.description && (
+													<p className="text-gray-700 text-sm">
+														{photo.description}
+													</p>
+												)}
+											</div>
+										)}
+									</div>
+								) : null
 							})()}
 						</div>
 					</div>

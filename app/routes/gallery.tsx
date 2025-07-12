@@ -24,6 +24,9 @@ export const loader = async () => {
 export default function Gallery() {
 	const { photos: photos } = useLoaderData<typeof loader>()
 
+	// For now, we'll add a simple loading check
+	const isLoading = false // We can enhance this later with proper navigation state
+
 	return (
 		<div className="mx-auto max-w-7xl">
 			<div className="rounded-xs py-6 shadow-md ">
@@ -42,8 +45,18 @@ export default function Gallery() {
 					</div>
 				</div>
 
-				<div className="grid w-full grid-cols-6 gap-2 text-base sm:grid-cols-9 md:grid-cols-12 md:gap-2 lg:grid-cols-12 lg:gap-2">
-					{photos.map((photo, index) => (
+				{isLoading ? (
+					// Loading skeleton for gallery
+					<div className="grid w-full grid-cols-6 gap-2 text-base sm:grid-cols-9 md:grid-cols-12 md:gap-2 lg:grid-cols-12 lg:gap-2">
+						{Array.from({ length: 50 }).map((_, index) => (
+							<div key={index} className="aspect-square">
+								<div className="w-full h-full animate-pulse bg-gray-300 dark:bg-gray-700 rounded-md" />
+							</div>
+						))}
+					</div>
+				) : (
+					<div className="grid w-full grid-cols-6 gap-2 text-base sm:grid-cols-9 md:grid-cols-12 md:gap-2 lg:grid-cols-12 lg:gap-2">
+						{photos.map((photo, index) => (
 						<div key={photo.uuid} className="group relative">
 							<NavLink
 								className={({ isActive, isPending }) =>
@@ -54,10 +67,10 @@ export default function Gallery() {
 							>
 								<div className="aspect-square overflow-hidden rounded-md bg-gray-200 transition-opacity hover:opacity-80">
 									<div className="flex h-full w-full items-center justify-center text-gray-400">
-										{photo.path && photo.path[index] && (
-											// eslint-disable-next-line jsx-a11y/alt-text
+										{photo.path && (
 											<img
 												src={photo.path}
+												alt={photo.title || photo.description || 'Media item'}
 												className="w-full h-full object-cover"
 											/>
 										)}
@@ -96,6 +109,7 @@ export default function Gallery() {
 						</div>
 					))}
 				</div>
+				)}
 
 				<div className="mt-8 flex justify-center">
 					<nav className="flex items-center gap-1">

@@ -1,4 +1,4 @@
-import { type photos, PrismaClient } from '../../../prisma/generated'
+import { PrismaClient, type photos } from '../../../prisma/generated'
 
 const prisma = new PrismaClient()
 export function getByMultipleDetails(
@@ -7,28 +7,41 @@ export function getByMultipleDetails(
 	qEndDate: string,
     qFavorite: number
 ) {
-	return prisma.photos.findMany({
-		include: {
-			labels: true,
+	// Build the where clause dynamically
+	const whereConditions: Record<string, unknown>[] = [
+		{
+			date: {
+				lte: qEndDate,
+				gte: qStartDate,
+			},
 		},
-		where: {
+		{ path: { not: null } },
+	]
+
+	// Add favorite filter only if specifically requested (qFavorite = 1)
+	if (qFavorite === 1) {
+		whereConditions.push({ favorite: { equals: 1 } })
+	}
+
+	// Build the final where clause
+	const whereClause = q && q.trim() !== ''
+		? {
+			AND: whereConditions,
 			OR: [
 				{ description: { contains: q } },
 				{ keywords: { some: { keyword: { contains: q } } } },
 				{ labels: { some: { label: { contains: q } } } },
-			],
-			AND: [
-				{
-					date: {
-						lte: qEndDate,
-						gte: qStartDate,
-					},
-				},
-				{ favorite: { equals: qFavorite } },
-				{ path: { not: null } },
-			],
+			]
+		}
+		: { AND: whereConditions }
+
+	return prisma.photos.findMany({
+		include: {
+			labels: true,
+			keywords: true,
 		},
-		orderBy: { date: 'asc' },
+		where: whereClause,
+		orderBy: { date: 'desc' },
 		skip: 0,
 		take: 90,
 	})

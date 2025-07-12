@@ -2,7 +2,9 @@
 	"workbench.colorCustomizations": {
         "editor.foldBackground": "#1e1e2e11",
         "commandCenter.border": "#e7e7e799",
+        "editorGroup.border": "#fb0503",
         "sash.hoverBorder": "#fb0503",
+        "sideBar.border": "#fb0503",
         "tab.activeBorder": "#fb0503",
         "titleBar.activeBackground": "#fb0503",
         "titleBar.activeForeground": "#e7e7e7",
@@ -10,7 +12,7 @@
         "titleBar.inactiveForeground": "#e7e7e799"
     },
 	"peacock.color": "#fb0503",
-	"svg.preview.background": "dark-transparent",
+	"svg.preview.background": "editor",
 	"mdx-preview.preview.useVscodeMarkdownStyles": false,
 	"editor.maxTokenizationLineLength": 50000,
 	"editor.fontFamily": "'Operator Mono Lig', 'PragmataPro Mono', 'Operator Mono Lig Light', 'Operator Mono Ssm Light', 'Operator Mono Lig', 'Operator Mono Ssm Lig', 'Operator Mono', 'M PLUS 1 Code', 'SF Mono', 'Inconsolata XL', 'Input Mono Condensed', Menlo, Monaco, 'Courier New', monospace",

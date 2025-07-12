@@ -90,16 +90,16 @@ export default function App() {
 					</NavLink>
 				</div>
 
-				<div className="toggle-button-wrapper inline-flex h-9 w-9 cursor-pointer justify-center self-center justify-self-end rounded-md">
+				<div className="toggle-button-wrapper inline-flex h-10 w-10 cursor-pointer justify-center self-center justify-self-end rounded-md">
 					<ToggleButton
-						className="toggle-button inline-flex h-9 w-9 rounded-full justify-center items-end"
+						className="toggle-button inline-flex h-10 w-10 rounded-full justify-center items-end"
 						onToggle={handleToggleSearch}
 						isActive={showSearch}
 					>
 						<img
 							src="magnifier.svg"
 							alt=""
-							className={`w-9 h-9 pt-1 object-contain ${showSearch ? 'hidden' : 'block'}`}
+							className={`w-10 h-10 pt-1.5 object-contain ${showSearch ? 'hidden' : 'block'}`}
 						/>
 						<img
 							src="x.svg"
@@ -137,8 +137,9 @@ export default function App() {
 
 			<main className="flex flex-col flex-grow w-screen min-h-dvh p-4 md:p-8 justify-center items-center bg-gradient-to-b from-gray-700  via-gray-950 via-30% to-gray-950">
 				{navigation.state === 'loading' ? (
-					<div className="flex h-64 items-center justify-center">
-						<div className="h-12 w-12 animate-spin rounded-full border-t-2 border-b-2 border-blue-500"></div>
+					<div className="flex flex-col h-64 items-center justify-center gap-4">
+						<div className="h-12 w-12 animate-spin rounded-full border-2 border-gray-300 border-t-blue-500" role="status" aria-label="Loading"></div>
+						<div className="text-gray-400 text-sm font-medium">Loading your media...</div>
 					</div>
 				) : (
 					<Outlet context={{ showSearch, handleToggleSearch }} />
