@@ -17,10 +17,12 @@ tempCodeRunnerFile.js
 /prisma/dev.db
 /prisma/dev.db-journal
 
+photos.db
+
 .specstory/
 /prisma/generated
 /public
 
-photos.db
+environment.json
 
 .local/

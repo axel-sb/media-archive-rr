@@ -56,23 +56,24 @@ export default function App() {
 	return (
 		<>
 			<div
-				className="flex flex-col justify-center bg-transparent text-yellow-100"
+				className="flex flex-col justify-center bg-transparent"
 				style={{
-					backgroundColor: 'rgba(255, 255, 255, 0.05)',
 					maskImage: 'url(images/leaves.avif)',
+                    width: '100vw',
+                    height: '110vh',
 					maskSize: 'cover',
 					maskRepeat: 'no-repeat',
 					maskPosition: 'center center',
 					position: 'absolute',
-					width: '100vw',
-					height: '110vh',
 					inset: '0',
+					backdropFilter: 'contrast(2.5) blur(0px)',
+                    zIndex: '-1',
 				}}
 			></div>
 			{/*//// MARK:HEADER 🟡
 			 */}
 			<header
-				className="grid h-16 w-full px-4 sm:px-6 md:px-8 grid-cols-[1fr_4rem_4rem_4rem] gap-4 md:gap-8 place-items-center bg-gray-700 z-10"
+				className="grid h-16 w-full px-4 sm:px-6 md:px-8 grid-cols-[1fr_4rem_4rem_4rem] gap-4 md:gap-8 place-items-center z-10"
 				style={{
 					boxShadow: '0 0 .5rem #000b, 0 0 1rem #0006, 0 0 1.5rem #0004',
 				}}
@@ -135,11 +136,17 @@ export default function App() {
 				</div>
 			</header>
 
-			<main className="flex flex-col flex-grow w-screen min-h-dvh p-4 md:p-8 justify-center items-center bg-gradient-to-b from-gray-700  via-gray-950 via-30% to-gray-950">
+			<main className="flex flex-col flex-grow w-screen min-h-dvh p-4 md:p-8 justify-center items-center ">
 				{navigation.state === 'loading' ? (
 					<div className="flex flex-col h-64 items-center justify-center gap-4">
-						<div className="h-12 w-12 animate-spin rounded-full border-2 border-gray-300 border-t-blue-500" role="status" aria-label="Loading"></div>
-						<div className="text-gray-400 text-sm font-medium">Loading your media...</div>
+						<div
+							className="h-12 w-12 animate-spin rounded-full border-2 border-gray-300 border-t-blue-500"
+							role="status"
+							aria-label="Loading"
+						></div>
+						<div className="text-gray-400 text-sm font-medium">
+							Loading your media...
+						</div>
 					</div>
 				) : (
 					<Outlet context={{ showSearch, handleToggleSearch }} />
@@ -149,7 +156,7 @@ export default function App() {
 			{/*//// MARK:FOOTER 🟡
 			 */}
 
-			<footer className="flex items-center justify-between w-full h-18 px-4 bg-gray-900 border-transparent border-t-gray-500/25 border text-gray-600">
+			<footer className="flex items-center justify-between w-full h-18 px-4 bg-gradient-to-r from-gray-950 via-transparent to-gray-950  text-gray-600">
 				<Link
 					to="https://rhettbull.github.io/osxphotos/index.html"
 					viewTransition
@@ -158,7 +165,7 @@ export default function App() {
 				</Link>
 				<NavLink
 					to={'/'}
-					className={`$({ isActive, isPending }) => isActive ? 'active' : 'pending' z-10 inline-flex h-10 w-auto justify-center items-center`}
+					className={`$({ isActive, isPending }) => isActive ? 'active' : 'pending' z-10 inline-flex h-10 w-auto justify-center items-currentTarget`}
 					viewTransition
 				>
 					<p className="text-3xl text-shadow-lg/50">k62</p>

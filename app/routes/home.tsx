@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import {
     Form,
-    Link,
     type LoaderFunctionArgs,
     useOutletContext
 } from 'react-router'
@@ -92,7 +91,6 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 
 	return (
 		<div className="relative">
-
 			<div className="size-full mx-auto pt-0 sm:p-14 max-w-4xl rounded-lg shadow-md">
 				<Form
 					className={`max-w-sm mx-auto ${showSearch ? 'opacity-100 block' : 'opacity-0 hidden'}`}
@@ -136,7 +134,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 					<div className="space-y-2 relative">
 						<label
 							htmlFor="searchParams"
-							className="mb-1 block text-sm font-medium text-gray-700"
+							className="mb-1 block text-sm font-medium text-gray-500"
 						>
 							Search Term
 						</label>
@@ -165,7 +163,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 						<div>
 							<label
 								htmlFor="startDate"
-								className="mb-1 block text-sm font-medium text-gray-700"
+								className="mb-1 block text-sm font-medium text-gray-400"
 							>
 								Start Date
 							</label>
@@ -181,7 +179,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 						<div>
 							<label
 								htmlFor="endDate"
-								className="mb-1 block text-sm font-medium text-gray-700"
+								className="mb-1 block text-sm font-medium text-gray-600"
 							>
 								End Date
 							</label>
@@ -211,33 +209,23 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 			</div>
 			<div className="mx-auto sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-full  bg-black">
 				<div className="flex w-full h-12 mb-4 bg-black justify-between self-baseline border border-gray-950 rounded-md">
-					<p className="inline-flex w-full justify-between items-center font-medium text-base text-gray-600">
+					<p className="inline-flex w-full justify-center items-center font-medium text-base text-gray-600">
 						search term:{' '}
 						<span className="inline-block h-3 mx-3 grow border border-transparent border-b-gray-700 border-b-2 border-dashed">
 							{' '}
 						</span>{' '}
-						<span className="inline-block shrink pr-2 text-gray-500 pl-1">
+						<span className="absolute bottom-0 translate-y-24 inline-block shrink pr-2 text-gray-500 pl-1">
 							{q}
 						</span>
 					</p>
 				</div>
-
-				<h2 className="flex justify-between mb-6 text-xl font-bold text-gray-600">
-					<p>Search Result Preview</p>
-					<Link
-						to={'./gallery'}
-						className="inline-flex justify-end-safe self-end rounded-md px-4 py-1 font-normal border-1 border-gray-700 bg-gray-800 text-gray-400 hover:focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none"
-					>
-						More
-					</Link>
-				</h2>
 
 				{/* //// MARK:IMGs _________________________________________🎞️
 				 */}
 				{isSearching ? (
 					// Loading skeleton for search results
 					<div className="grid w-full pb-7 mx-auto justify-center-safe grid-cols-6 gap-1 text-base sm:grid-cols-9 md:grid-cols-12 lg:grid-cols-15 xl:grid-cols-18">
-						{Array.from({ length: 18 }).map((_, index) => (
+						{Array.from({ length: 20 }).map((_, index) => (
 							<div key={index} className="aspect-square">
 								<div className="w-full h-full animate-pulse bg-gray-300 dark:bg-gray-700 rounded-md" />
 							</div>
@@ -246,7 +234,6 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 				) : (
 					<div className="grid w-full pb-7 mx-auto justify-center-safe grid-cols-6 gap-1 text-base sm:grid-cols-9 md:grid-cols-12 lg:grid-cols-15 xl:grid-cols-18">
 						{data?.map((photo) => (
-
 							<button
 								key={photo.uuid}
 								className="relative cursor-pointer w-full h-full bg-transparent border-none p-0"
@@ -323,7 +310,9 @@ export default function Home({ loaderData }: Route.ComponentProps) {
 							</button>
 
 							{(() => {
-								const photo = data?.find((photo) => photo.uuid === selectedPhoto)
+								const photo = data?.find(
+									(photo) => photo.uuid === selectedPhoto,
+								)
 								return photo ? (
 									<div className="flex flex-col">
 										{photo.path && (

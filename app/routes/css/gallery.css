@@ -26,3 +26,12 @@ clamp-img {
 	flex: 1 1 15rem;
 	width: clamp(200px, 100%, 500px);
 }
+
+
+/* Assign transition names to elements during navigation */
+a.transitioning img {
+  view-transition-name: photo;
+}
+img {
+  view-transition-name: photo;
+}

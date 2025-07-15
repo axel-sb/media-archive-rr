@@ -36,7 +36,7 @@ export default function PhotoId() {
 				<img
 					src={`${photo.path}`}
 					alt=""
-					className="object-contain object-center m-auto"
+					className="object-contain object-center m-auto max-h-[calc(100vh-12rem)] max-w-full"
 				/>
 				<figcaption>
 					<button
