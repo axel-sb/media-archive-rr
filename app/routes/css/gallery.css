@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* .five-lines {
     overflow: hidden;
@@ -7,31 +7,3 @@
     display: -webkit-box;
 } */
 
-/* .grid {
-    grid-template-rows: masonry;
-} */
-
-clamp-gallery img {
-	object-fit: cover;
-	width: 100%;
-	height: 100%;
-}
-clamp-gallery {
-	display: flex;
-	flex-wrap: wrap;
-	padding: 0;
-	margin: 0;
-}
-clamp-img {
-	flex: 1 1 15rem;
-	width: clamp(200px, 100%, 500px);
-}
-
-
-/* Assign transition names to elements during navigation */
-a.transitioning img {
-  view-transition-name: photo;
-}
-img {
-  view-transition-name: photo;
-}

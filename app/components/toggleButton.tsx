@@ -16,7 +16,7 @@ export default function ToggleButton({
 	return (
 		<button
 			className={`btn-toggle block z-50 ${className} ${
-				isActive ? 'opacity-80' : 'opacity-100'
+				isActive ? 'opacity-100' : 'opacity-80'
 			}`}
 			onClick={onToggle}
 		>

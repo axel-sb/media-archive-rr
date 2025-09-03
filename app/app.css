@@ -1,49 +1,175 @@
 @import 'tailwindcss';
 
-@theme {
-	--font-sans:
-		'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
-		'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-}
-
-html,
-body {
-	@apply bg-gray-800 dark:bg-gray-950;
-
-	@media (prefers-color-scheme: dark) {
-		color-scheme: dark;
+@utility scrollbar-hidden {
+	&::-webkit-scrollbar {
+		display: none;
 	}
 }
 
-footer {
+@layer components {
+	.hide-scrollbar {
+		scrollbar-width: 0px;
+		scrollbar-color: transparent;
+	}
+	.hide-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+	interpolate-size: allow-keywords;
+	/* .input {
+		width: var(--w-full);
+		color: var(--text-neutral-300);
+		background-color: var(--bg-black/10);
+		border-radius: var(--radius-md);
+		border-width: var(--border-default);
+		border-color: var(--border-neutral-100/50);
+		padding: var(--spacing-6);
+		transition: var(--transition-all);
+		&:focus {
+			background-color: var(--bg-black/25);
+			border-color: var(--border-neutral-200/85);
+			outline: none;
+		} */
+}
 
-		font-family: 'Sixtyfour Convergence', sans-serif;
-		font-optical-sizing: auto;
-		font-weight: 400;
-		font-style: normal;
-		font-variation-settings:
-			'BLED' 0,
-			'SCAN' 0,
-			'XELA' 50,
-			'YELA' 10;
-		filter: grayscale(1);
-	
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/* MARK: fonts */
+
+@theme {
+	--font-sans:
+		system-ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+		'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+	--font-mono:
+		'Operator Mono Ssm Lig', 'PragmataPro Mono', 'Operator Mono Lig Light',
+		'Operator Mono Ssm Light', 'Operator Mono', 'M PLUS 1 Code', 'SF Mono',
+		'Inconsolata XL', 'Input Mono Condensed', Menlo, Monaco, 'Courier New',
+		monospace;
+	--font-display: 'SF Pro Display', sans-serif;
+	--font-rounded: 'SF Pro Rounded', sans-serif;
+	--font-text: 'SF Pro Text', sans-serif;
+	--font-compact: 'SF Compact Text', sans-serif;
+	--font-compact-rounded: 'SF Compact Rounded', sans-serif;
+	--font-compact-text: 'SF Compact Text', sans-serif;
+	--inset-shadow-xs:
+		inset 0 0 0 5.5px rgb(64, 252, 12) !important,
+		inset 0 0 0 10px hsl(305, 100%, 50%) !important;
+	--inset-shadow-md:
+		inset 0 0 0 5.5px rgb(64, 252, 12) !important,
+		inset 0 0 0 10px hsl(305, 100%, 50%) !important;
+	--inset-shadow-md: inset 0 2px 3px rgba(255, 0, 255, 1);
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes jiggle {
+	0%,
+	91%,
+	100% {
+		transform: rotate(0deg);
+	}
+	94% {
+		transform: rotate(-3deg);
+	}
+	97% {
+		transform: rotate(3deg);
+	}
+}
+
+.animate-jiggle {
+	animation: jiggle 3s cubic-bezier(0.99, 0.78, 0.72, 1.04);
+	animation-fill-mode: forwards;
+	animation-iteration-count: infinite;
+}
+
+footer {
+	position: relative;
+	&::before {
+		content: '';
+		position: absolute;
+		height: 1px;
+		background-image: linear-gradient(transparent, #fff, transparent);
+	}
+}
+
+input[type='date' i]::-webkit-calendar-picker-indicator,
+#picker {
+	width: 1.25rem !important;
+	height: 1.25rem !important;
+	padding: 0 !important;
+	filter: invert(0.75) sepia(0.5);
+}
+
+#search-clear {
+	filter: sepia(1);
+	width: 1.25rem !important;
+	height: 1.25rem !important;
+}
+
+/* MARK: k62 */
+
+/* .k62 {
+	width: 8rem;
+	height: 2.4rem;
+	background-image: url('k62-3a.png');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	position: absolute;
+	transition: all 0.4s ease-out;
+	opacity: 1;
+
+	&::after {
+		content: '';
+		width: 100%;
+		height: 2.4rem;
+		background-image: url('k62-3b.png');
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center;
+		position: absolute;
+		transition: all 0.4s ease-out;
+		opacity: 1;
+    filter: contrast(1);
+	}
+}
+
+body > header > div > a:hover {
+	transform: scale(1.10);
+  filter: brightness(1.2);
+	&::after {
+		opacity: 0;
+	}
+} */
+
+/* font-family: 'Sixtyfour Convergence', sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+	font-variation-settings:
+		'BLED' 0,
+		'SCAN' 0,
+		'XELA' 50,
+		'YELA' 10;
+	filter: grayscale(1);
 
 	&:hover {
-		transition-property: opacity, transform;
-		font-family: 'Sixtyfour Convergence';
+		transition-property: filter, transform;
 		font-weight: 400;
 		font-style: normal;
 		font-stretch: normal;
 		font-variation-settings:
-			'BLED' 0,
-			'SCAN' 0,
-			'XELA' 100,
-			'YELA' 100;
+			'SCAN' 1,
+			'XELA' 10,
+			'YELA' 14;
 		font-optical-sizing: none;
-		opacity: 1;
-		line-height: initial;
 		transition-duration: 350ms;
-		filter: grayscale(0);
-	}
-}
+		filter: grayscale(0) contrast(2);
+		visibility: visible;
+	}*/

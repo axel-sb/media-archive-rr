@@ -20,9 +20,9 @@ tempCodeRunnerFile.js
 photos.db
 
 .specstory/
+.local/
+.cursor/
 /prisma/generated
 /public
 
 environment.json
-
-.local/

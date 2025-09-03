@@ -1,0 +1,179 @@
+body {
+	background-image: url(kleedient-amadine.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-attachment: fixed;
+
+	&:has(figure img) {
+		header {
+			display: none;
+		}
+	}
+}
+
+main {
+	overflow-y: auto;
+	overflow-x: hidden;
+	-webkit-overflow-scrolling: touch;
+	background-color: #0008;
+}
+
+footer {
+	display: none;
+}
+
+/* // figure with same-width text https://codepen.io/5t3ph/pen/JodpOOR */
+figure {
+	inline-size: fit-content;
+	margin-inline: auto;
+	position: relative;
+}
+
+figcaption {
+	/* no size contribution for figcaption */
+	contain: inline-size;
+}
+
+img {
+	/* you can have max-width */
+	max-width: 100%;
+}
+
+.btn-back {
+	display: block;
+}
+
+/* MARK:DETAILS ------------------------------------
+*/
+
+details {
+	transition: all 0.5s ease;
+}
+
+summary {
+	/* Pin the custom marker to the container */
+	anchor-name: --marker-anchor;
+  &::open {
+    filter:grayscale(1);
+  }
+
+	/* Register summary as an anchor element */
+
+	&::marker {
+		content: '􀁍';
+		color: var(--color-neutral-300);
+		position: absolute;
+		position-anchor: --marker-anchor;
+		align-self: anchor-center;
+		font-size: 1.5rem;
+	}
+}
+
+details[open] summary {
+	content: '􀁏';
+	&::marker {
+		content: '􀁎';
+	}
+}
+
+[open]::details-content {
+	transition:
+		height 0.5s ease,
+		content-visibility 0.5s ease allow-discrete;
+	height: 0;
+	overflow: clip;
+	filter: grayscale(1);
+}
+
+/* Browser supports interpolate-size */
+@supports (interpolate-size: allow-keywords) {
+	:root {
+		interpolate-size: allow-keywords;
+	}
+
+	[open]::details-content {
+		height: calc-size(auto, size);
+	}
+}
+
+/* Fallback for browsers with no interpolate-size support */
+@supports not (interpolate-size: allow-keywords) {
+	[open]::details-content {
+		height: 150px;
+		overflow-y: scroll; /* In case the contents should be taller than 150px */
+	}
+}
+
+::details-content {
+	transition:
+		height 0.7s ease,
+		content-visibility 0.7s ease allow-discrete;
+	height: 0;
+	overflow: clip;
+}
+
+[open]::details-content {
+	height: calc-size(
+		auto,
+		size + 0.5rem
+	); /* calc-size because we need to add a length; The `calc-size(<calc-size-basis>, <calc-sum>)` CSS function allows you to perform calculations on intrinsic size values */
+}
+
+/* MARK: table ------------------------------------
+*/
+
+.table-wrapper {
+	/* border-radius: 20px;
+	border: 1px solid #aaa3;
+	padding: 4.5rem 0 2rem;
+	width: 100%;
+	background-color: #0003;
+	text-wrap: balance; */
+}
+
+table {
+	position: relative;
+	margin: 0;
+	margin-inline: auto;
+	padding-bottom: 1.5rem;
+	border-radius: 0.7em;
+	box-sizing: border-box;
+}
+
+tr:nth-child(even) {
+	background-color: #fff3;
+}
+
+tr:last-child > td:first-child {
+	border-bottom-left-radius: 5px;
+}
+
+tr:last-child > td:last-child {
+	border-bottom-right-radius: 5px;
+}
+
+td {
+	line-height: 1.5;
+	font-weight: 500;
+	max-width: 500px;
+	word-wrap: break-word;
+}
+
+td:first-child {
+	/* The max-content sizing keyword represents the intrinsic maximum width or height of the content. For text content this means that the content will not wrap at all even if it causes overflows. */
+}
+
+td:last-child {
+	padding-right: 0.8em;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+tr:last-child > td:first-child {
+	border-bottom-left-radius: 7px 14px;
+}
+
+tr:last-child > td:last-child {
+	border-bottom-right-radius: 7px 14px;
+}

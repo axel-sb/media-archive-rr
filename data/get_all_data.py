@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""This script os based on an example script from the osxphotos website (https://rhettbull.github.io/osxphotos/API_README.html#additional-examples). It extracts data from the SQLite database of the Apple Photos app ('~/Pictures/Photos Library.photoslibrary/database') and creates a new database in the project directory's data folder.
+"""This script os based on an example script from the osxphotos website (https://rhettbull.github.io/osxphotos/API_README.html#additional-examples). It extracts data from the SQLite database of the Apple Photos app ('~/Pictures/Photos Library.photoslibrary/database' symlinked to '/Volumes/Samsung/Pictures/Photos Library.photoslibrary/database') and creates a new database in the project directory's data folder.
 """
 
 from __future__ import annotations
@@ -110,11 +110,9 @@ class PhotoEncoder(json.JSONEncoder):
 )
 def example(exclude_unknown_persons, sqlite, photos: list[osxphotos.PhotoInfo], **kwargs):
     """Sample query command for osxphotos. Prints out the filename and date (and all other specified keys) of each photo in JSON format.
-
     Whatever text you put in the function's docstring here, will be used as the command's
     help text when run via `osxphotos run get_all_data.py --help` or `python get_all_data.py --help`
     """
-
     verbose(f"Found {len(photos)} photo(s)")
     verbose("This message will only be printed if verbose level 2 is set", level=2)
 
@@ -560,11 +558,18 @@ def example(exclude_unknown_persons, sqlite, photos: list[osxphotos.PhotoInfo], 
                 return abs_path.replace(SOURCE_PREFIX, WEB_PREFIX)
             return abs_path
 
+        # Before inserting photos, get existing descriptions
+        cursor.execute('SELECT uuid, description FROM photos WHERE description IS NOT NULL AND description != ""')
+        existing_descriptions = dict(cursor.fetchall())
+
         # Insert data into tables
         for photo_data in all_photos:
             # Normalize paths before inserting into the database
             normalized_path = normalize_path(photo_data["path"])
             normalized_path_edited = normalize_path(photo_data["path_edited"])
+
+            # Preserve existing description if it exists and photo doesn't have one
+            description = photo_data["description"] or existing_descriptions.get(photo_data["uuid"])
 
             # Insert into photos table
             location = photo_data["location"]
@@ -587,7 +592,7 @@ def example(exclude_unknown_persons, sqlite, photos: list[osxphotos.PhotoInfo], 
                 1 if photo_data["portrait"] else 0,
                 1 if photo_data["hdr"] else 0,
                 1 if photo_data["panorama"] else 0,
-                photo_data["description"]
+                description  # Use preserved or new description
             ))
 
             # Insert keywords

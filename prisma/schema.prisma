@@ -176,6 +176,7 @@ model photos {
   title             String?
   path              String?
   path_edited       String?
+  thumbnail_path    String?
   has_raw           Int?
   height            Int?
   width             Int?

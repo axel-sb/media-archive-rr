@@ -1,11 +1,11 @@
 {
-  "arrowParens": "always",
+	"arrowParens": "always",
 	"bracketSameLine": false,
 	"bracketSpacing": true,
 	"embeddedLanguageFormatting": "auto",
 	"endOfLine": "lf",
 	"htmlWhitespaceSensitivity": "css",
-    "indent_Style": "2",
+	"indent_Style": "2",
 	"insertPragma": false,
 	"jsxSingleQuote": false,
 	"printWidth": 80,
@@ -22,14 +22,14 @@
 		{
 			"files": ["**/package.json"],
 			"options": {
-			    "useTabs": false
+				"useTabs": false
 			}
 		},
 		{
 			"files": ["**/*.mdx"],
 			"options": {
-			    "proseWrap": "preserve",
-			    "htmlWhitespaceSensitivity": "ignore"
+				"proseWrap": "preserve",
+				"htmlWhitespaceSensitivity": "ignore"
 			}
 		}
 	],

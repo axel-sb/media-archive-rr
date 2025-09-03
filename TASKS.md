@@ -2,9 +2,9 @@
 
 ## Priority Tasks
 ### UI Enhancements
-- [ ] Add loading and error states for data fetching
-- [ ] Implement proper pagination controls
-- [ ] Add a modal viewer for media items
+- [x] Add loading and error states for data fetching
+- [x] Implement proper pagination controls
+- [x] Add a modal viewer for media items
 
 ### Map Implementation
 - [ ] Select and integrate a mapping library (Leaflet recommended)
