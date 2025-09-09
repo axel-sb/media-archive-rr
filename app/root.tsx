@@ -38,7 +38,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<Meta />
 				<Links />
 			</head>
-			<body className="grid w-full min-h-full grid-cols-1 grid-rows-1 has-grid:grid-rows-[80px_1fr] [grid-template-areas:'header'_'main'] bg-[url(kleedient-amadine.jpg)] bg-fixed bg-center bg-cover md:bg-size-[100%_100%] bg-blend-multiply">
+			<body className="group grid w-full min-h-full grid-cols-1 grid-rows-[minmax(0px,80px)_1fr)] [grid-template-areas:'header'_'main'] bg-[url(kleedient-amadine.jpg)] bg-fixed bg-center bg-cover md:bg-size-[100%_125%]">
 				{children}
 				<ScrollRestoration />
 				<Scripts />
@@ -57,46 +57,53 @@ export default function App() {
 		<>
 			{/* <div className="absolute inset-0 h-full min-h-full bg-[url(kleedient-amadine.jpg)] bg-fixed bg-center bg-cover md:bg-size-[100%_100%] grow xl:bg-cover bg-blend-multiply"></div> */}
 
-			{/*//// MARK:HEADER 🟡
-			 */}
+			{/*****************************************************************************
+			 *  MARK:HEADER
+			 *****************************************************************************/}
 			<header
-				className="peer fixed top-0 grid [grid-area:header] h-20 w-full px-4 sm:px-6 md:px-8 grid-cols-[1fr_1fr] items-center justify-between z-100 backdrop-blur-xs backdrop-brightness-90 transition-all duration-300 ease-out after:absolute after:inset-y-full after:h-0.20 after:w-full after:bg-linear-to-r after:from-blue-50/25 after:via-blue-50/50 after:to-blue-400/25 after:z-100"
+				className="peer fixed top-0 grid [grid-area:header] h-20 w-full px-4 sm:px-6 md:px-8 grid-cols-[1fr_1fr] items-center justify-between z-80 opacity-0 hover:opacity-100 hover:backdrop-blur-xs hover:backdrop-brightness-90 transition-all duration-300 ease-out after:absolute after:inset-y-full after:h-0.20 after:w-full after:bg-linear-to-r after:from-blue-50/25 after:via-blue-50/50 after:to-blue-400/25 after:z-100  group-has-[glass]:opacity-100"
 				style={{
 					boxShadow: 'inset 0 0 1px #1e3047, 0 0 1px #647387, 0 0 1.5px #fff8',
 				}}
 			>
-					<NavLink
-						className={`$({ isActive, isPending }) => isActive ? 'active' : 'pending' w-32 z-10 inline-grid [grid-template-columns:1fr] [grid-template-rows:1fr] items-center self-start justify-start mr-auto cursor-pointer`}
-						to={`/`}
+				<NavLink
+					className={`$({ isActive, isPending }) => isActive ? 'active' : 'pending' w-32 z-10 inline-grid [grid-template-columns:1fr] [grid-template-rows:1fr] items-center self-start justify-start mr-auto cursor-pointer`}
+					to={`/`}
+				>
+					<img
+						src="k62-3a.png"
+						className="relative inline-block opacity-100 hover:opacity-0 w-[128px] h-[39px] [grid-row:1_/_2] transition-opacity duration-400 ease-out object-cover"
+						alt="k62"
+					/>
+					<img
+						src="k62-3c.png"
+						className="relative inline-block opacity-0 hover:opacity-100 w-[128px] h-[39px] [grid-row:1_/_2] transition-opacity duration-400 ease-out object-cover"
+						alt="k62"
+					/>
+				</NavLink>
+				{/*****************************************************************************
+          MARK:BTN-BACK
+        *****************************************************************************/}
+				<div className="btn-back fixed inset-0 grid-area:header inline-grid place-items-center size-20 text-neutral-300/85 rounded-full hover:text-yellow-400 z-10">
+					<button
+						onClick={() => navigate(-1)}
+						className="size-full text-3xl leading-0 items-center"
 					>
-						<img
-							src="k62-3a.png"
-							className="relative inline-block opacity-100 hover:opacity-0 w-[128px] h-[39px] [grid-row:1_/_2] transition-opacity duration-400 ease-out object-cover"
-							alt="k62"
-						/>
-						<img
-							src="k62-3c.png"
-							className="relative inline-block opacity-0 hover:opacity-100 w-[128px] h-[39px] [grid-row:1_/_2] transition-opacity duration-400 ease-out object-cover"
-							alt="k62"
-						/>
-					</NavLink>
+						􀰎
+					</button>
+				</div>
+
 				<div className="inline-grid grid-cols-[1fr_1.25fr_1fr] max-w-48 p-0.5 justify-self-end gap-8 sm:gap-12 lg-gap-14 items-center self-center justify-between w-full">
 					<div className="inline-grid place-items-center size-full cursor-pointer">
 						<NavLink
 							to={`/`}
-							className={`$({ isActive, isPending }) => isActive ? 'active' : 'pending' z-10`}
+							className={`$({ isActive, isPending }) => isActive ? 'active' : 'pending' z-100`}
 						>
-							<ToggleButton
-								className="toggle-button"
-								onToggle={handleToggleSearch}
-								isActive={showSearch}
-							>
-								<img
-									src="magnifier2.svg"
-									alt="Magnifier Icon"
-									className="flex-grow w-full will-change-auto object-contain translate-y-0.5 hover:scale-125 transition-transform duration-300 ease-out drop-shadow-[-14px_4px_4px_rgba(0,0,0,0.5)]"
-								/>
-							</ToggleButton>
+							<img
+								src="magnifier2.svg"
+								alt="Magnifier Icon"
+								className="flex-grow w-full will-change-auto object-contain translate-y-0.5 hover:scale-125 opacity-50 hover:opacity-100 transition-transform duration-300 ease-out drop-shadow-[-14px_4px_4px_rgba(0,0,0,0.5)] z-100"
+							/>
 						</NavLink>
 					</div>
 
@@ -108,7 +115,7 @@ export default function App() {
 							<img
 								src="gallery-gradient.svg"
 								alt="Gallery Icon"
-								className="w-full will-change-auto object-contain hover:scale-120 transition-transform duration-300 ease-out drop-shadow-[-14px_4px_4px_rgba(0,0,0,0.5)]"
+								className="w-full will-change-auto object-contain hover:scale-120 opacity-50 hover:opacity-100 transition-transform duration-300 ease-out drop-shadow-[-14px_4px_4px_rgba(0,0,0,0.5)]"
 							/>
 						</NavLink>
 					</div>
@@ -121,14 +128,17 @@ export default function App() {
 							<img
 								src="map3.svg"
 								alt="Map Icon"
-								className="w-full will-change-auto object-contain hover:scale-120 transition-transform duration-300 ease-out drop-shadow-[-14px_4px_4px_rgba(0,0,0,0.5)]"
+								className="w-full will-change-auto object-contain hover:scale-120 opacity-50 hover:opacity-100 transition-all duration-300 ease-out drop-shadow-[-14px_4px_4px_rgba(0,0,0,0.5)]"
 							/>
 						</NavLink>
 					</div>
 				</div>
 			</header>
+			{/*****************************************************************************
+			 *   MARK:MAIN
+			 *****************************************************************************/}
 
-			<main className="peer-has-grid:hidden flex [grid-area:main] flex-col grow w-full mx-auto min-h-full p-0 justify-center items-center">
+			<main className="flex [grid-area:main] flex-col grow w-full mx-auto min-h-full p-0 justify-center items-center">
 				{navigation.state === 'loading' ? (
 					<div className="flex flex-col h-64 items-center justify-center gap-4">
 						<div

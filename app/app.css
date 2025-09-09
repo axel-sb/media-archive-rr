@@ -15,20 +15,6 @@
 		display: none;
 	}
 	interpolate-size: allow-keywords;
-	/* .input {
-		width: var(--w-full);
-		color: var(--text-neutral-300);
-		background-color: var(--bg-black/10);
-		border-radius: var(--radius-md);
-		border-width: var(--border-default);
-		border-color: var(--border-neutral-100/50);
-		padding: var(--spacing-6);
-		transition: var(--transition-all);
-		&:focus {
-			background-color: var(--bg-black/25);
-			border-color: var(--border-neutral-200/85);
-			outline: none;
-		} */
 }
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
@@ -50,14 +36,9 @@
 	--font-compact: 'SF Compact Text', sans-serif;
 	--font-compact-rounded: 'SF Compact Rounded', sans-serif;
 	--font-compact-text: 'SF Compact Text', sans-serif;
-	--inset-shadow-xs:
-		inset 0 0 0 5.5px rgb(64, 252, 12) !important,
-		inset 0 0 0 10px hsl(305, 100%, 50%) !important;
-	--inset-shadow-md:
-		inset 0 0 0 5.5px rgb(64, 252, 12) !important,
-		inset 0 0 0 10px hsl(305, 100%, 50%) !important;
-	--inset-shadow-md: inset 0 2px 3px rgba(255, 0, 255, 1);
 }
+
+
 
 @keyframes fadeIn {
 	from {
@@ -140,13 +121,6 @@ input[type='date' i]::-webkit-calendar-picker-indicator,
 	}
 }
 
-body > header > div > a:hover {
-	transform: scale(1.10);
-  filter: brightness(1.2);
-	&::after {
-		opacity: 0;
-	}
-} */
 
 /* font-family: 'Sixtyfour Convergence', sans-serif;
 	font-optical-sizing: auto;

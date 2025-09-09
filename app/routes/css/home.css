@@ -18,15 +18,23 @@
   }
 } */
 
+.group:has(.glass) {
+	header {
+		opacity: 1;
+	}
+	.btn-back {
+		opacity: 0;
+	}
+}
 
 main:has(div.glass:focus-within) {
 	background-color: #0004;
-  .glass {
-    filter: brightness(1.3) saturate(1.2);
-    input, button {
-
-    }
-  }
+	.glass {
+		filter: brightness(1.3) saturate(1.2);
+		input,
+		button {
+		}
+	}
 }
 
 /**
@@ -35,22 +43,19 @@ main:has(div.glass:focus-within) {
 
 .glass {
 	backdrop-filter: blur(30px) hue-rotate(2deg) brightness(1.2);
-  background-color: #ffffff1a;
+	background-color: #ffffff1a;
 	border: 0.5px solid rgba(255, 255, 255, 0.2);
 	box-shadow:
 		0 0px 2px rgba(0, 0, 0, 0.1),
 		inset 0 0.5px 0 rgba(255, 255, 255, 0.15),
 		inset 0 -0.5px 0 rgba(255, 255, 255, 0.15);
 	position: relative;
-  padding: 2px;
+	padding: 2px;
 }
 
 .border-linear-reverse {
-  background: linear-gradient(to bottom right,#11171b20,#a39c9e20);
+	background: linear-gradient(to bottom right, #11171b20, #a39c9e20);
 }
-
-
-
 
 /* modal _ _ _ _ _ _ _ _ _ ___  */
 

@@ -1,6 +1,7 @@
 .venv
 .react-router/
 node_modules
+.vscode/
 tempCodeRunnerFile.js
 
 /.cache
@@ -26,3 +27,18 @@ photos.db
 /public
 
 environment.json
+
+data/misc_scripts/
+data/osxphotos_output/
+
+# Temporary files
+_temp*
+app/routes/test*
+
+# Cleanup
+.zed/settings.json
+app/components/magnifier.1.svg
+app/utils/simple-image-converter.server.ts
+data/counts.py
+data/photolibrary.schema.sql
+data/search.psi.schema.sql

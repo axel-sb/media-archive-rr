@@ -136,18 +136,18 @@ export default function PhotoDetail() {
 			{isFullscreen && (
 				<button
 					onClick={() => setIsFullscreen(false)}
-					className="absolute top-4 right-4 z-20 w-10 h-10 bg-black bg-opacity-70 text-white rounded-full hover:bg-opacity-90 text-xl"
+					className="absolute grid place-items-center backdrop-blur-xs top-4 right-4 z-20 w-10 h-10 rounded-full hover:bg-opacity-90 text-xl text-white/85"
 				>
-					×
+					􀀳
 				</button>
 			)}
 
 			{/* Back button (only when not in fullscreen) */}
 			{!isFullscreen && (
-				<div className="btn-back self-start inline-grid place-center size-16 p-4 text-neutral-300 rounded-full hover:text-yellow-400 z-10">
+				<div className="btn-back fixed inset-0 grid-area:header inline-grid place-items-center size-20 text-neutral-300/85 rounded-full hover:text-yellow-400 z-10">
 					<button
 						onClick={() => navigate(-1)}
-						className="size-full text-3xl leading-0"
+						className="size-full text-3xl leading-0 items-center"
 					>
 						􀰎
 					</button>
@@ -155,55 +155,53 @@ export default function PhotoDetail() {
 			)}
 			{/*  MARK: FIGURE */}
 			<figure
-				className={`${isFullscreen ? 'w-screen h-screen flex items-center justify-center' : 'flex items-center justify-center min-w-80 max-w-[clamp(380px,70%,1000px)] mx-auto pt-14 md:pt-14 xl:pt-18 rounded-2xl'}`}
+				className={`${isFullscreen ? 'w-screen h-screen flex flex-col items-center justify-start' : 'group flex flex-col items-center justify-start min-w-80 max-w-9/12 max-h-9/12 mx-auto rounded-2xl has-[details]:p-4'}`}
 			>
 				{photo.path ? (
-					<div
-						onClick={handleImageClick}
-						className="relative w-screen h-screen cursor-pointer"
-					>
-						{/* Navigation Controls - show in both normal and fullscreen */}
-						{navigation && (
-							<div
-								className={`absolute flex items-center justify-between w-screen h-screen z-20  text-neutral-300  ${
-									isFullscreen ? 'text-neutral-300' : ''
-								}`}
-							>
-								<button
-									onClick={() => handleNavigation('prev')}
-									disabled={!navigation.previous}
-									className="previous px-8 h-full opacity-50 disabled:opacity-20 text-xl hover:text-4xl hover:backdrop-blur-sm hover:opacity-100 transition-opacity"
+					<>
+						<div
+							onClick={handleImageClick}
+							className="relative grid place-items-center w-screen h-screen cursor-pointer"
+						>
+							{/* Navigation Controls - show in both normal and fullscreen */}
+							{navigation && (
+								<div
+									className={`absolute flex items-center justify-between w-screen h-screen z-20  text-neutral-300  ${
+										isFullscreen ? 'text-neutral-300' : ''
+									}`}
 								>
-									􀯶
-								</button>
-								{/* MARK: COUNTER
-								 */}
-								<span className="self-end translate-y-8 text-neutral-400 text-sm">
-									{navigation.currentIndex + 1} / {navigation.all.length}
-								</span>
-								<button
-									onClick={() => handleNavigation('next')}
-									disabled={!navigation.next}
-									className="next px-6 py-48 opacity-50 disabled:opacity-20 text-xl hover:text-3xl hover:opacity-100 transition-opacity"
-								>
-									􀯻
-								</button>
-							</div>
-						)}
+									<button
+										onClick={() => handleNavigation('prev')}
+										disabled={!navigation.previous}
+										className="previous ml-2 px-2 h-24 rounded-md opacity-50 disabled:opacity-50 text-xl hover:text-4xl hover:bg-neutral-800/50 hover:backdrop-blur-sm hover:opacity-100 transition-opacity"
+									>
+										􀯶
+									</button>
 
-						{/*  MARK: IMAGE */}
+									<button
+										onClick={() => handleNavigation('next')}
+										disabled={!navigation.next}
+										className="next ml-2 px-2 h-24 rounded-md opacity-50 disabled:opacity-50 text-xl hover:text-4xl hover:bg-neutral-800/50 hover:backdrop-blur-sm hover:opacity-100 transition-opacity"
+									>
+										􀯻
+									</button>
+								</div>
+							)}
+						</div>
 						<OptimizedImage
 							src={photo.path!}
 							editedSrc={photo.path_edited}
 							thumbnailSrc={photo.thumbnail_path}
 							alt={photo.title || photo.original_filename || 'Photo'}
-							className={`max-w-full max-h-full object-contain object-center justify-self-center ${
-								isFullscreen ? 'cursor-pointer' : ''
+							className={` ${
+								isFullscreen
+									? 'fixed inset-0 object-contain cursor-pointer'
+									: 'fixed inset-y-0 inset-x-auto object-contain group-has-[figcaption>details]:w-[80vw] group-has-[figcaption>details]:h-[80vh] '
 							}`}
 							useFullSize={true}
 							onClick={handleImageClick}
 						/>
-					</div>
+					</>
 				) : (
 					<div className="flex h-96 w-full min-w-xl items-center justify-center bg-neutral-200 rounded-lg">
 						<span className="text-neutral-500">No media available</span>
@@ -215,22 +213,29 @@ export default function PhotoDetail() {
 				{/*  MARK: FIGCAP.
 				 ------------------------------------------------------------------ */}
 				{!isFullscreen && (
-					<figcaption className="glass w-auto my-12 mx-auto p-0 py-3 rounded-2-xl font-compact-text">
-						<div className="font-compact-text pl-4 md:pl-8 text-sm text-neutral-400">
-							<h1 className="mt-3 text-xl font-bold text-neutral-400 font-rounded">
-								{photo.title || `${photoDate}`}
-							</h1>
-							<div>
-								<p className="">{photo.original_filename}</p>
-
-								{photo.description && <p className="">{photo.description}</p>}
-							</div>
-						</div>
-
+					<figcaption className="fixed bottom-0 has-[details[open]]:top-4 has-[details[open]]:backdrop-blur-3xl has-[details[open]]:overflow-y-auto w-full my-12 mx-auto p-0 py-3 rounded-2-xl font-compact-text z-[101]">
 						{/*  MARK: DETAILS
 						 */}
-						<details className="">
-							<summary className="relative z-20 ml-[calc(50%-0.75rem)] mt-4 mb-3 cursor-pointer text-neutral-300 marker:text-neutral-300"></summary>
+						<details className="w-full max-w-lg mx-auto">
+							<summary className="relative z-20 w-fit ml-[50%] mb-3 cursor-pointer text-neutral-300 marker:text-neutral-300 -translate-x-1/2 ">
+								<div className="translate-x-4 -translate-y-6.5 font-compact-text pl-2 md:pl-4 text-neutral-400">
+									{/* MARK: COUNTER
+									 */}
+									<div className="-mt-[2lh] mb-[1lh] text-neutral-400 opacity-50 hover:opacity-100 transition-opacity">
+										{navigation.currentIndex + 1} / {navigation.all.length}
+									</div>
+									<h1 className="text-xl font-bold text-neutral-400 font-rounded">
+										{photo.title || `${photoDate}`}
+									</h1>
+									<div>
+										<p className="">{photo.original_filename}</p>
+
+										{photo.description && (
+											<p className="">{photo.description}</p>
+										)}
+									</div>
+								</div>
+							</summary>
 							<div className="table-wrapper w-full px-2 md:px-4 rounded-md">
 								{/*  MARK: TABLE */}
 								<table className="table-fixed w-full text-neutral-300 text-sm">

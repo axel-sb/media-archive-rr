@@ -1,0 +1,5 @@
+.local
+data/misc_scripts/
+data/osxphotos_output/
+/prisma/generated
+/public
